@@ -1,0 +1,2110 @@
+#create data
+patientid<-c(1,2,3,4)
+age<-c(25,34,28,52)
+diabetes<-c("type1","type2","type1","type1")
+diabetes<-factor(diabetes)
+status<-c("poor","improved","excellent","poor")
+status<-factor(status,order=TRUE)
+patientdata<-data.frame(patientid,age,diabetes,status,row.names = patientid)
+patientdata
+#data block
+with(mtcars,{
+  summary(mpg,disp,wt)
+  plot(mpg,disp)
+  plot(mpg,wt)
+})
+mydata<-data.frame(age=numeric(0),gender=numeric(0),weight=numeric(0))
+mydata<-edit(mydata)
+fix(mydata)
+#drawing
+attach(mtcars)
+plot(wt,mpg)
+abline(lm(mpg~wt))
+title("regression of mpg on weight")
+detach(mtcars)
+#simple example of drawing  picture
+dose<-c(10,20,30,35,50)
+druga<-c(16,20,27,40,60)
+drugb<-c(15,18,25,31,40)
+plot(dose,druga,type = "b")
+par()
+par(no.readonly = TRUE)
+opar<-par(no.readonly = TRUE)
+par(pin=c(1,2))
+par(lwd=1,cex=1)
+par(cex.axis=1,font.axis=3)
+plot(dose,druga,type = "b",pch=19,lty=2,col="red")
+plot(dose,drugb,type="b",pch=23,lty=6,col="blue",bg="green",fg="red",
+     main = "title",sub = "subtitle",xlab = "doses")
+#par(ann=FALSE):remove the default set
+par(lty=2,pch=17)
+plot(dose,druga,type = "b")
+par(opar)
+plot(dose,druga,type = "b",lty=3,lwd=3,pch=15,cex=2)
+#lty:line type,lwd:line width,pch:plot symbol,cex:plot size
+#col:drawing color,col.axis:axis scale color,col.lab:axis label color,col.main:title color,col.sub:subtitle color,fg:front color,bg:backgrand color
+n<-10
+mycolors<-rainbow(n)
+pie(rep(1,n),labels = mycolors,col = mycolors)
+mygrays<-gray(0:n/n)
+pie(rep(1,n),labels = mygrays,col = mygrays)
+#doc attribute:
+#size:
+#  cex,cex.axis:axis scale,cex.lab:axis label,cex.main:title,cex.sub:subtitle
+#font:
+#  font,font.axis,font.lab,font.main,font.sub,ps:size pound,(ps*cex)is the final size,family:doc font
+par(pin=c(4,3),mai=c(1,.5,1,.2))
+#pin:(width,height),mai:(butten,left,top,right),mar:mai/12
+#title(),axis()
+x<-c(1:10)
+y<-x
+z<-10/x
+opar<-par(no.readonly = TRUE)
+par(mar=c(5,4,4,8)+0.1)
+plot(x,y,type = "b",pch=21,col="red",yaxt="n",lty=3,ann=FALSE)
+#lines()
+lines(x,z,type="b",pch=22,col="blue",lty=2)
+axis(2,at=x,labels=x,col.axis="red",las=2)
+axis(4,at=z,labels=round(z,digits=2),col.axis="blue",las=2,cex.axis=.7,tck=-.01)
+#mtext()
+mtext("y=1/x",side=4,line = 3,cex.lab=1,las=2,col = "blue")
+title("example of axes",xlab="x value",ylab="y=x")
+par(opar)
+#second scale line:minor.tick(nx=n,ny=n,tick.ratio=n)
+minor.tick(nx=2,ny=3,tick.ratio=.5)
+#reference line:abline(h=yvalue,v=xvalue)
+abline(h=c(1,5,7))
+abline(v=seq(1,10,2),lty=2,col="blue")
+#legend:legend(location,title,legend,...)
+minor.tick(nx=3,ny=3,tick.ratio=.5)
+legend("topleft",inset=.05,title="drug type",c("a","b"),lty=c(1,2),pch=c(15,17),col = c("red","blue"))
+#text label of plot:text(),mtext():text(location,"test to place",pos,...),mtext("text to place",side,line=n,...)
+attach(mtcars)
+plot(wt,mpg,main="mileage vs. car weight",xlab = "weight",
+     ylab = "mileage",pch=18,col="blue")
+text(wt,mpg,row.names(mtcars),cex=.6,pos=4,col="red")
+detach(mtcars)
+#plotmath()
+#picture combination
+#par(mfrow=c(nrows,ncols))according to row 
+#or par(nfcol=c(nrows,ncols))according to col
+attach(mtcars)
+opar<-par(no.readonly = TRUE)
+par(mfrow=c(1,4))
+plot(wt,mpg,main = "wt vs. mpg")
+plot(wt,disp,main = "wt vs. disp")
+hist(wt,main = "histogram of wt")
+boxplot(wt,main="boxplot of wt")
+par(opar)
+detach(mtcars)
+#layout(mat)
+attach(mtcars)
+layout(matrix(c(1,1,2,3),2,2,byrow = TRUE))
+hist(wt)
+hist(mpg)
+hist(disp)
+detach(mtcars)
+#widths=,heights=
+attach(mtcars)
+layout(matrix(c(1,1,2,3),2,2,byrow = TRUE),widths = c(2,1),heights = c(1,1))
+hist(wt)
+hist(mpg)
+hist(disp)
+detach(mtcars)
+#fig=
+opar<-par(no.readonly = TRUE)
+par(fig=c(0,.8,0,.8))
+plot(mtcars$wt,mtcars$mpg,xlab = "miles per gallon",ylab = "car weight")
+par(fig=c(0,.8,.55,1),new=TRUE)
+boxplot(mtcars$wt,horizontal = TRUE,axes=FALSE)
+par(fig=c(.65,1,0,.8),new=TRUE)
+boxplot(mtcars$mpg,axes=FALSE)
+mtext("enhanced scatterplot",side = 3,outer=TRUE,line = -3)
+par(opar)
+#create new variable
+mydata<-data.frame(x1=c(2,2,6,4),x2=c(3,4,2,8))
+mydata$sumx<-mydata$x1+mydata$x2
+mydata$meanx<-(mydata$x1+mydata$x2)/2
+mydata
+#or transform()
+mydata<-transform(mydata,sumx=x1+x2,meanx=(x1+x2)/2)
+#recode variable:variable[condition]<-expression
+#within() and with():within() modify allow;with() no
+leadership<-read.table("r4.txt",TRUE,stringsAsFactors = FALSE)
+leadership$age[leadership$age==99]<-NA
+leadership<-within(leadership,{
+  agecat<-NA
+  agecat[age>75]<-"elder"
+  agecat[age>=55&age<=75]<-"middle aged"
+  agecat[age<55]<-"young"
+})
+#"car" package's recode();"doBy" package's recodevar();cut() of R itself all can achieve recode,but function won't be same
+#rename variable
+#fix()
+#"reshape" package's rename():rename(dataframe,c(oldname="newname",oldname="newname",...))
+#names():names(dataframe)[n]<- "newname"
+#recognize missing value
+#is.na()
+#excluse missing value
+#na.rm=TRUE:remove the value
+#na.omit():remove the record with missing value
+#datedata
+#as.Date():as.Date(x,"input_format")
+dates<-c("2007-06-22","2004-02-13")
+dates<-as.Date(dates)
+dates<-c("01/05/1965","08/16/1975")
+dates<-as.Date(dates,"%m/%d/%Y")
+#Sys.Date():return the day;date():return the day and time
+#format(x,format="output_format")
+#R store the date with using 1970/01/01 to calculate,after is positive,before is negative,so you can arithmetic calculate 
+startdate<-as.Date("2004-02-13")
+enddate<-as.Date("1990-03-05")
+days<-enddate - startdate
+#difftime(end,start,units="unit"):unit can be "weeks"/"days"/"hours"/"mins'/"secs"
+difftime(Sys.Date(),enddate,units="days")
+#dates to str
+#as.character()
+#"lubridate" package contains many functions about date calculation
+#datatype judgement and transformation
+#judgement:is.numeric(),is.character(),is.vector(),is.matrix(),is.data.frame(),is.factor(),is.logical()
+#transformation:turn the "is" to "as"
+#sorting:order() default is ascending,"-" front means descending
+attach(leadership)
+newdata<-leadership[order(gender,age),]
+detach(leadership)
+#data combination
+#transverse combination:merge()
+#total<-merge(dataframe1,dataframe2,by=c("ID",...))
+#total<-cbind(A,B) is not so good
+#portrait combination:rbind(A,B),the variable of two dataframe must be same,if not,delete the extrament or add the lackness
+#subset of dataframe
+#remain variable:newdata<-dataframe[row,column]
+#delete variable:
+myvars<-names(leadership) %in% c("q3","q4")
+newdata<-leadership[!myvars]
+#or
+leadership$q3 <- leadership$q4 <- NULL
+#remain or delete record:
+newdata<-leadership[1:3,]
+#or
+newdata<-leadership[which(leadership$gender=="M" & leadership$age>30),]
+#subset():subset(dataframe,recordcondition,select=variables)
+#random sample
+#sample():
+mysample<-leadership[sample(1:nrow(leadership),3,replace = FALSE),]
+#"sampling" & "survey" package
+#"sqldf" package's sqldf():sqldf("sql code",row.name=)
+
+
+#high level data management
+scoredatas<-read.table("test.txt",TRUE)
+
+#math function:abs(x),sqrt(x),ceiling(x),floor(x),trunc(x),round(x,digits=n),signif(x,digits=n),exp(x),log(x,base=n),log(x),log10(x),cos(x),sin(x),tan(x),acos(x),asin(x),atan(x),cosh(x),sinh(x),tanh(x),acosh(x),asinh(x),atanh(x)
+
+#statistics functions:mean(x),median(x),sd(x),var(x),mad(x),quantile(x,probs),range(x),sum(x),diff(x,lag=n),min(x),max(x),scale(x,center=TRUE,scale=TRUE)
+x<-c(1,2,3,4,5,6,7,8)
+mean(x)
+sd(x)
+n<-length(x)
+meanx<-sum(x)/n
+css<-sum((x-meanx)^2)
+sdx<-sqrt(css/(n-1))
+
+#data normalization:scale()
+#newdata<-scale(mydata)
+#newdata<-scale(mydata)*SD+M
+#newdata<-transform(mydata,myvar=scale(myvar)*10+50)
+
+#probability functions:[dpqr]distribution_abbreviation()
+#d = density
+#p = distribution function
+#q = quantile function
+#r = random
+#beta,binom,cauchy,chisq,exp,f,gamma,geom,hyper,lnorm,logis,multinom,nbinom,norm,pois,signrank,t,unif,weibull,wilcox
+x<-pretty(c(-3,3),30)
+y<-dnorm(x)
+plot(x,y,type="l",main = "example",xlab = "normal deviate",ylab = "density",yaxs="i")
+pnorm(1.96)
+qnorm(.9,mean = 500,sd=100)
+rnorm(50,mean = 50,sd=10)
+#set.seed()
+runif(5)
+runif(5)
+set.seed(1234)
+runif(5)
+set.seed(1234)
+runif(5)
+#"MASS" package's mvrnorm():mvrnorm(n,mean,sigma)
+options(digits = 3)
+set.seed(1234)
+mean<-c(230.7,146.7,3.6)
+sigma<-matrix(c(15360.8,6721.2,-47.1,
+                6721.2,4700.9,-16.5,
+                -47.1,-16.5,.3),nrow = 3,ncol = 3)
+mydata<-mvrnorm(500,mean,sigma)
+mydata<-as.data.frame(mydata)
+names(mydata)<-c("y","x1","x2")
+dim(mydata)
+head(mydata,n=10)
+
+#string functions
+#nchar(x):char count
+x<-c("ab","cde","fghij")
+length(x)
+nchar(x[3])
+#substr(x,start,stop):get or replace
+x<-"abcdef"
+substr(x,2,4)
+substr(x,2,4)<-"22222"
+#grep(pattern,x,ignore.case=FALSE,fixed=FALSE):在x中搜索某种模式，若fixed=FALSE,则pattern为一个正则表达式。若fixed=TRUE则pattern为文本字符串，返回值为匹配的下标
+grep("A",c("b","A","c"),fixed=TRUE)
+#sub(pattern,replacement,x,ignore.case=FALSE,fixed=FALSE):在x中搜索pattern,并以文本replacement将其替换
+sub("\\s",".","Hello There")
+#strsplit(x,split,fixed=FALSE):在split处分割字符向量x中的元素
+y<-strsplit("abc","")
+unlist(y)[2]
+sapply(y,"[",2)
+#paste(...,sep=""):连接字符串，分隔符为sep
+paste("x",1:3,sep="")
+paste("x",1:3,sep="M")
+paste("today is",date())
+#toupper(x),tolower(x):大小写转换
+
+#正则表达式eg:^[hc]?at可匹配任意以0个或1个h或c开头，后接at的字符串
+
+#other functions
+#length(x)
+x<-c(1,2,3,4)
+length(x)
+#seq(from,to,by):生成一个序列
+indices<-seq(1,10,2)
+#rep(x,n):将x重复n次
+#cut(x,n):将连续型变量x分割为有n个水平的因子，使用选项ordered_result=TRUE创建一个有序型因子
+#pretty(x,n):创建美观的分割点。通过选取n+1等间距的取整值，将一个连续型变量x分割为n个区间。
+#cat(...,file="myfile",append=FALSE):连接...中的对象，并将其输出到屏幕上或文件中
+name<-c("jane")
+cat("hello",name,"\n")
+#\n换行，\t制表符，\'单引号，\b退格，?Quotes了解更多)
+name<-"bob"
+cat("hello",name,"\b.\n","isn't R","\t","great?\t")
+
+#apply the functions to matrix and dataframe
+#函数可以应用于一系列数据对象，包括标量、向量、矩阵、数组、数据框，mean()求矩阵全部元素的均值，而不是想要的各行或各列的均值
+#apply():apply(x,MARGIN,FUN,...)MARGIN是维度下标，FUN是要应用的函数，在矩阵或数据框中MARGIN=1表示行，MARGIN=2表示列
+mydata<-matrix(rnorm(30),nrow=6)
+apply(mydata,1,mean)
+apply(mydata,2,mean)
+apply(mydata,2,mean,trim=.2)
+#apply(),lapply(),sapply()
+#apply()可把函数应用到数组的某个维度上，而lapply()和sapply()则可将函数应用到列表上
+options(digits = 2)
+roster<-read.table("test5-3.txt",TRUE,sep = "\t",stringsAsFactors = FALSE)
+z<-scale(roster[,2:4])
+score<-apply(z,1,mean)
+roster<-cbind(roster,score)
+y<-quantile(score,c(.8,.6,.4,.2))
+roster$grade[score>=y[1]]<-"A"
+roster$grade[score<y[1]&score>=y[2]]<-"B"
+roster$grade[score<y[2]&score>=y[3]]<-"C"
+roster$grade[score<y[3]&score>=y[4]]<-"D"
+roster$grade[score<y[4]]<-"F"
+sname<-strsplit((roster$name)," ")
+lastname<-sapply(sname,"[",2)
+firstname<-sapply(sname,"[",1)
+roster<-cbind(firstname,lastname,roster[,-1])
+roster<-roster[order(lastname,firstname),]
+#stu<-c("john davis","angela williams"),strsplit(stu," ")
+
+#control stream
+#4 important concepture
+#语句(statement),条件(cond),表达式(expr),序列(seq)
+
+#circulation:for,while
+#for(var in seq) statement
+for(i in 1:10) print("hello")
+#while(cond) statement
+i<-10;while(i>0){print("hello");i<- i-1}
+#在处理大数据集中的行和列时，R中的循环可能比较低效，最好联用R中的内建数值/字符处理函数和apply族函数
+
+#condition:if-else,iflese,switch
+#if(cond)statement
+#if(cond)statement1 else statement2
+#ifelse(cond,statement1,statement2)
+#switch(expr,...)
+feel<-c("sad","afraid")
+for(i in feel)print(switch(i,happy=1,afraid=2,sad=3,angry=4))
+
+#own code
+#myfunction<-function(arg1,arg2,...){statements
+#                                    return(object)}
+#报错函数cat(),warning(),message(),stop()
+#Debugging in R
+
+#aggregate and reshape
+#转置:t()
+cars<-mtcars[1:5,1:4]
+t(cars)
+#折叠数据aggregate(x,by,FUN)：by中的变量必须在一个列表中（即使只有一个变量）。可以在列表中为各组声明自定义的名称：by=list(Group.cyl=cyl,Group.gears=gear)
+options(digits = 3)
+attach(mtcars)
+aggdata<-aggregate(mtcars,by=list(cyl,gear),FUN = mean,na.rm=TRUE)
+detach(mtcars)
+
+#"reshape" package
+id<-c(1,1,2,2)
+time<-c(1,2,1,2)
+x1<-c(5,3,6,2)
+x2<-c(6,5,1,4)
+mydata<-data.frame(id,time,x1,x2)
+#融合：melt()
+md<-melt(mydata,id=(c("id","time")))
+#重铸cast():newdata<-cast(md,formula,FUN)
+#rowvar1+rowvar2+...~colvar1+colvar2+...
+cast(md,id~variable,mean)
+cast(md,time~variable,mean)
+cast(md,id~time,mean)
+cast(md,id+variable~time)
+cast(md,id+time~variable,mean)
+cast(md,id~variable+time)
+
+
+#basic methods
+#basic plot
+#barplot():barplot(height),选项horiz=TRUE则会生成水平条形图，main,xlab,ylab
+
+#张倩眼动数据分析
+#数据整理
+library("reshape")
+inteval<-100;totaltime<-5000 #设定总观察时间和时间分段
+for(i in 1:22){
+  datatmp<-read.table(paste(i,".txt",sep=""),sep="\t",TRUE,row.names = NULL)
+  datatmp[,1]<-i
+  for(j in 1:length(datatmp[,1])){
+    if(datatmp[j,15]==".")
+    {datatmp[j,16]<-5}else if(datatmp[j,15]=="cl")
+    {datatmp[j,16]<-1}else if(datatmp[j,15]=="pT")
+    {
+      if(datatmp[j,6]==1)
+      {datatmp[j,16]<-3}else if(datatmp[j,6]==2)
+      {datatmp[j,16]<-2}else
+        datatmp[j,16]<-4
+    }else if(datatmp[j,15]=="pR")
+    {
+      if(datatmp[j,6]==1)
+      {datatmp[j,16]<-2}else if(datatmp[j,6]==2)
+      {datatmp[j,16]<-4}else
+        datatmp[j,16]<-3
+    }else
+    {
+      if(datatmp[j,6]==1)
+      {datatmp[j,16]<-4}else if(datatmp[j,6]==2)
+      {datatmp[j,16]<-3}else
+        datatmp[j,16]<-2
+    }
+  }
+  datatmp<-datatmp[,c(1,3,4,5,7,8,11,16)]
+  datatmp<-rename(datatmp,c(CURRENT_FIX_INDEX="fixindex",trialid="item",TRIAL_FIXATION_TOTAL="fixtotal",RECORDING_SESSION_LABEL="subject",type="target",CURRENT_FIX_START="fix_start",CURRENT_FIX_END="fix_end",V16="region"))
+  datatmp<-subset(datatmp,fix_start<totaltime)
+  for(l in 1:length(datatmp[,1])){
+    if(datatmp[l,6]>=totaltime)
+      datatmp[l,6]<-totaltime-1
+  }
+  dataYN<-data.frame(Subject=NA,Item=NA,Condition=NA,Fixseq=NA,area1=NA,area2=NA,area3=NA,area4=NA,area5=NA)
+  for(t in 1:40){
+    datatmptmp<-subset(datatmp,item==t)
+    dataY<-data.frame(subject=NA,item=NA,condition=NA,fixseq=NA,area1=NA,area2=NA,area3=NA,area4=NA,area5=NA)
+    for(m in 1:max(datatmptmp[,6]))
+    {dataY[m,c(1,2,3,4)]<-c(datatmptmp[1,c(1,2,3)],as.integer(m/inteval)+1)}
+    for(k in 1:length(datatmptmp[,1]))
+    {
+      for(n in datatmptmp[k,5]:datatmptmp[k,6])
+      {dataY[n,4+datatmptmp[k,8]]<-as.integer(n>=datatmptmp[k,5]&&n<=datatmptmp[k,6])}
+      
+    }
+    dataY <- aggregate(dataY, by=list(Subject = dataY$subject,Item = dataY$item,Condition = dataY$condition,Fixseq = dataY$fixseq), FUN=sum, na.rm=TRUE)
+    dataY$item <- dataY$condition <- dataY$subject<-dataY$fixseq <- NULL
+    dataYN<-rbind(dataYN,dataY)
+  }
+  dataYN<-subset(dataYN,!is.na(Subject))
+  dataYNtmp<-dataYN[,c(5:8)];
+  dataYNtmp<-log((dataYNtmp+0.5)/(inteval-dataYNtmp+0.5));
+  dataYN$datalgd<-dataYNtmp[,2]-dataYNtmp[,4];
+
+
+  write.csv(dataYN,paste("datat",i,".csv",sep=""),row.names = FALSE)
+}
+#以上是整理成R处理的数据
+
+
+#读取整理好的数据
+datat<-read.csv("datat1.csv",TRUE,row.names = NULL)
+for(i in 2:22){
+  datatmp<-read.csv(paste("datat",i,".csv",sep=""),TRUE,row.names = NULL)
+  datat<-rbind(datat,datatmp)
+}
+write.csv(datat,"datat.csv",row.names = FALSE)
+#这一小段是把要处理的数据汇总到一起
+
+#dataY<-data.frame(subject=NA,item=NA,condition=NA,fixseq=NA,area1=NA,area2=NA,area3=NA,area4=NA,area5=NA)
+dataYN<-data.frame(Subject=NA,Item=NA,Condition=NA,Fixseq=NA,area1=NA,area2=NA,area3=NA,area4=NA,area5=NA)
+
+for(t in 1:40){
+datatmptmp<-subset(datatmp,item==t)
+dataY<-data.frame(subject=NA,item=NA,condition=NA,fixseq=NA,area1=NA,area2=NA,area3=NA,area4=NA,area5=NA)
+for(j in 1:max(datatmptmp[,6]))
+{dataY[j,c(1,2,3,4)]<-c(datatmptmp[1,c(1,2,3)],as.integer(j/inteval)+1)}
+for(k in 1:length(datatmptmp[,1]))
+{
+  for(n in datatmptmp[k,5]:datatmptmp[k,6])
+  {dataY[n,4+datatmptmp[k,8]]<-as.integer(n>=datatmptmp[k,5]&&n<=datatmptmp[k,6])}
+  
+}
+dataY <- aggregate(dataY, by=list(Subject = dataY$subject,Item = dataY$item,Condition = dataY$condition,Fixseq = dataY$fixseq), FUN=sum, na.rm=TRUE)
+dataY$item <- dataY$condition <- dataY$subject<-dataY$fixseq <- NULL
+dataYN<-rbind(dataYN,dataY)
+}
+dataYN<-subset(dataYN,!is.na(Subject))
+dataYNtmp<-dataYN[,c(5:8)];
+dataYNtmp<-log((dataYNtmp+0.5)/(100-dataYNtmp+0.5));
+dataYN$datalgd<-dataYNtmp[,2]-dataYNtmp[,4];
+
+for(t in 1:totaltime){
+  time_var<-as.character(t)
+  fix_status<-vector()
+  for(k in 1:length(datatmp[,1])){
+  if(datatmp[k,5] <= t && t <= datatmp[k,6])
+  {fix_status[k]<-datatmp[k,8]}else
+    fix_status[k]<-5
+  }
+  datatmp[[time_var]] <- fix_status
+  }
+rm(t, k, time_var,  fix_status)
+
+for (t in 1:6000) {
+  time <- t * inteval
+  time_var <- as.character(t)
+  fix_status <- vector()
+  for (i in 1:nrow(datatmp)) {
+    fix_status[i] <- as.integer(datatmp$fix_start[i] <= time && time <= datatmp$fix_end[i])
+  }
+  datatmp[[time_var]] <- fix_status
+}
+rm(t, time, time_var, i, fix_status)
+
+dataY <- aggregate(data1, by=list(List = data1$list,Subject = data1$subject,Condition = data1$condition,Region = data1$region,Item=data1$item), FUN=sum, na.rm=TRUE)
+dataY$region <- dataY$item <- dataY$condition <- dataY$subject <- dataY$list <- dataY$trial <- dataY$fix_start <- dataY$fix_end <- NULL
+dataY<-rename(dataY,c(List="list",Subject="subject",Condition="condition",Item="item",Region="region"))
+dataY <- melt(dataY, id=(c("list","subject","condition", "item", "region")))
+
+
+
+
+
+#LN((U2+0.5)/(100-U2+0.5))
+for(i in 1:33){
+  datat<-read.table(paste("data(",i,").txt",sep=""),sep="\t",TRUE,row.names = NULL);
+  head(datat);
+  datatmp<-datat[,c(7:10)];
+  head(datatmp);
+  datatmp<-(datatmp+0.5)/(100-datatmp+0.5);
+  head(datatmp);
+  datatmp<-log(datatmp);
+  head(datatmp);
+  datatmp<-datatmp[,2]-datatmp[,4];
+  #t(datatmp)
+  head(datatmp);
+  datatt<-cbind(datat,datatmp);
+  head(datatt);
+  write.csv(datatt,paste("datat",i,".csv",sep=""),row.names = FALSE)}
+
+datat<-read.csv("datat25.csv",TRUE,row.names = NULL)
+subject<-rep(25,length(datat$trialLabel))
+datat<-cbind(subject,datat)
+for(i in 26:33){
+  datatmp<-read.csv(paste("datat",i,".csv",sep=""),TRUE,row.names = NULL)
+  subject<-rep(i,length(datatmp$trialLabel))
+  datatmp<-cbind(subject,datatmp)
+  datat<-rbind(datat,datatmp)
+}
+write.csv(datat,"datat.csv",row.names = FALSE)
+
+#张倩给的数据分析
+library(lmerTest)
+data = read.delim("datat.csv", ",", header=TRUE)
+exp<-data
+ls()
+exp$p <- ifelse(exp$Prime=="DO",-.5,.5)
+exp$t <- ifelse(exp$Type=="DO",-.5,.5)
+head(exp,5)
+e1 <- lmer(y ~ p*t + (1| Subject) + (1 | Item), data=exp)
+summary(e1)
+e2<-lmer(y ~ p*t + (t|Subject) + (t|Item), data=exp)
+summary(e2)
+anova(e1,e2)
+
+ts <- fixef(e1) / sqrt(diag(vcov(e1)))
+print(round(ts,2))
+ps <- 2*(1-pnorm(abs(ts)))
+print(round(ps,3))
+#
+exp.lmer <- lmer(y ~ Prime*Type + (1| Subject) + (1 | Item), data=exp)
+summary(exp.lmer)
+#
+exp$S <- ifelse(exp$Prime=="DO",0,1)
+exp$K <- ifelse(exp$Type=="DO",0,1)
+head(exp,24)
+exp.lmer <- lmer(y ~ S*K + (1| Subject) + (1 | Item), data=exp)
+summary(exp.lmer)
+#我改的数据分析
+library(lmerTest)
+data = read.delim("datat.csv", ",", header=TRUE)
+exp<-data
+ls()
+exp$p <- ifelse(exp$prime=="po",-.5,.5)
+exp$l <- ifelse(exp$life=="dif",-.5,.5)
+
+#exp$Fixseq<-as.factor(exp$Fixseq)
+#exp$t <- ifelse(exp$Type=="po",-.5,.5)
+head(exp)
+exp1314<-subset(exp,Fixseq==18)
+head(exp1314)
+summary(aov(datatmp~prime*life*Type+Error(subject/(prime+life+Type)),data=exp2526))
+e1 <- lmer(datalgd ~ p*l + (1| Subject) + (1 | Item), data=exp1314)
+summary(e1)
+e2 <- lmer(datalgd ~ p*l + (p*l| Subject) + (p*l | Item), data=exp1314)
+summary(e2)
+e21 <- lmer(datatmp ~ p*l + (l| subject) + (0+l | trialID)+ (1 | trialID), data=exp1314)
+summary(e21)
+e3 <- lmer(datalgd ~ p*l + (p+l| Subject) +( p+l | Item), data=exp1314)
+summary(e3)
+e3 <- lmer(datalgd ~ p*l + (l| Subject) + (l | Item), data=exp1314)
+summary(e3)
+e3 <- lmer(datalgd ~ p*l + (p | Subject) + (p | Item), data=exp1314)
+summary(e3)
+e4 <- lmer(datatmp ~ p*l + (p| Subject) + (p | trialID)+ (0+l| subject) + (0+l | trialID), data=exp1314)
+summary(e4)
+library(optimx)
+m1 = lmer(datatmp ~ p*l + (p| subject) + (p | trialID)+ (l| subject) + (l | trialID), data=exp1314, REML = FALSE, 
+          control = lmerControl(
+            optimizer ='optimx', optCtrl=list(method='nlminb')))
+anova(e1,e2)
+anova(e1,e3)
+anova(e4,e3)
+anova(e2)
+ts <- fixef(e2) / sqrt(diag(vcov(e2)))
+print(round(ts,2))
+ps <- 2*(1-pnorm(abs(ts)))
+print(round(ps,3))
+
+
+
+#雪梅行为数据分析
+library (lme4)
+E12all <- read.table ("E12.txt", TRUE)
+E12 = subset(E12all,Priming<2)
+summary(E12)
+E1 = subset(E12,Exp==-0.5)
+E2 = subset(E12,Exp==0.5)
+summary(E1)
+summary(E2)
+# Expeirment 1 (diff verb)
+E2$Subject = factor (E2$Subject)
+E2$Item = factor (E2$Item)
+e1=glmer(Priming~Language*order+(Language+1|Subject)+(Language+1|Item),E2,family="binomial",control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=1e6)))
+summary(e1)
+e10=glmer(Priming~1+(Language+1|Subject)+(Language+1|Item),E2,family="binomial",control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=1e6)))
+summary(e10)
+#
+e1=glmer(Priming~Language*order+(Language|Subject)+(Language|Item),E2,family="binomial",control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=1e6)))
+e2=glmer(Priming~Language*order+(1|Subject)+(1|Item),E2,family="binomial",control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=1e6)))
+anova(e1,e2)
+summary(e2)
+
+
+
+#简单条形图
+#"vcd"可以创建棘状图
+counts<-table(Arthritis$Improved)
+barplot(counts,main = "simple bar plot",xlab = "improve",ylab = "frequency")
+barplot(counts,main = "simple bar plot",xlab = "improve",ylab = "frequency",horiz = TRUE)
+#类别型变量是一个因子或有序型因子，用plot()快速创建垂直条形图,table()提取各单元格计数
+#生成100个1,rep()
+rep(1,10)
+
+#堆砌条形图和分组条形图
+#height是矩阵而不是向量，则绘图结果将是一幅堆砌条形图或分组条形图，若beside=FALSE默认，则矩阵中的每一列都将生成图中的一个条形，各列中的值将给出堆砌的子条的高度，若beside=true则矩阵中的每一列都表示一个分组，各列中的值将并列而不是堆砌
+library(vcd)
+counts<-table(Arthritis$Improved,Arthritis$Treatment)
+barplot(counts,main = "stacked bar plot",xlab = "treatment",ylab = "freq",col = c("red","yellow","green"),legend=rownames(counts))
+barplot(counts,main = "stacked bar plot",xlab = "treatment",ylab = "freq",col = c("red","yellow","green"),legend=rownames(counts),beside = TRUE)
+
+#均值条形图
+states<-data.frame(state.region,state.x77)
+means<-aggregate(states$Illiteracy,by=list(state.region),FUN=mean)
+means<-means[order(means$x),]
+barplot(means$x,names.arg = means$Group.1)
+title("mean illiteracy rate")
+#各个条形可以使用lines()绘制线段连起来
+#gplots的barplot2()创建叠加有置信区间的均值条形图
+lines(means$x)
+hh <- t(VADeaths)[, 5:1]
+mybarcol <- "gray20"
+ci.l <- hh * 0.95
+ci.u <- hh * 1.05
+mp <- barplot2(hh, beside = TRUE,
+               col = c("lightblue", "mistyrose",
+                       "lightcyan", "lavender"),
+               legend = colnames(VADeaths), ylim = c(0, 100),
+               main = "Death Rates in Virginia", font.main = 4,
+               sub = "Faked 95 percent error bars", col.sub = mybarcol,
+               cex.names = 1.5, plot.ci = TRUE, ci.l = ci.l, ci.u = ci.u,
+               plot.grid = TRUE)
+mtext(side = 1, at = colMeans(mp), line = -2,
+      text = paste("Mean", formatC(colMeans(hh))), col = "red")
+box()
+x.l<-means$x*.95
+x.u<-means$x*1.05
+barplot2(means$x,names.arg = means$Group.1,plot.ci=TRUE,ci.l = x.l,ci.u = x.u)
+
+#条形图微调
+#cex.names字号，names.arg允许指定一个字符向量作为条形的标签名
+par(las=2)  #旋转条形标签、修改标签文本
+
+#棘状图spine()
+attach(Arthritis)
+counts<-table(Treatment,Improved)
+spine(counts,main="spinogram example")
+detach(Arthritis)
+
+#饼图pie(x,labels):x非负数微量，表示每个扇形面积，labels各扇标签的字符型向量
+par(mfrow=c(2,2))
+slices<-c(10,12,4,16,8)
+lbls<-c("us","uk","aus","germ","francs")
+pie(slices,lbls,main="simple pie chart")
+pct<-round(slices/sum(slices)*100)
+lbls2<-paste(lbls," ",pct,"%",sep = "")
+pie(slices,lbls2,col = rainbow(length(lbls2)),main = "pie chart with percentages")  #rainbow()定义各扇形颜色
+library(plotrix)
+pie3D(slices,labels=lbls,explode=0.1,main="3d pie chart")
+mytable<-table(state.region)
+lbls3<-paste(names(mytable),"\n",mytable,sep="")
+pie(mytable,labels = lbls3,main = "pie chart from a table\n (with sample sizes)")
+#R中的扇形图是通过plotrix包的fan.plot()实现的
+fan.plot(slices,labels=lbls,main = "fan plot")
+
+#直方图hist(x):x是一个由数据值组成的数值向量。freq=false表示根据概率密度而不是频数绘制图形，breaks用于控制组的数量
+par(mfrow=c(2,2),mai=c(0.7,0.7,0.3,0.1),mar=c(4,4,1.5,1))
+hist(mtcars$mpg)
+hist(mtcars$mpg,breaks = 12,col = "lightgreen",xlab = "mile per gallon",main = "colored histogram with 12 bins")
+hist(mtcars$mpg,freq=FALSE,breaks = 12,col = "lightyellow",xlab = "mile per gallon",main = "colored histogram with 12 bins")
+rug(jitter(mtcars$mpg))
+lines(density(mtcars$mpg),col="red",lwd=2)
+x<-mtcars$mpg
+h<-hist(x,breaks = 12,col = "lightblue",xlab = "mile per gallon",main = "colored histogram with 12 bins")
+xfit<-seq(min(x),max(x),length=40)
+yfit<-dnorm(xfit,mean=mean(x),sd=sd(x))
+yfit<-yfit*diff(h$mids[1:2])*length(x)
+lines(xfit,yfit,col="red",lwd=2)
+box()
+
+#核密度图:plot(density(x))
+par(mfrow=c(1,1),mai=c(1,1,0.3,0.1),mar=c(4,4,1.5,1))
+d<-density(mtcars$mpg)
+plot(d)
+plot(d,main = "kernel density")
+polygon(d,col = "red",border = "blue")
+rug(mtcars$mpg,col = "brown")
+#sm包的sm.density.compare()可向图形叠加两组或更多的核密度图sm.density.compare(x,factor)
+
+#箱线图
+boxplot(mtcars$mpg,main="boxplot",ylab="miles per gallon")
+#箱线图展示单个变量或分组变量:boxplot(formula,data=data.frame())，varwidth=TRUE将使箱线图的宽度与其样本大小的平方根成正比，horizontal=TRUE反转坐标轴方向
+boxplot(mpg~cyl,data = mtcars)
+#notch=TRUE，含凹的箱线图
+boxplot(mpg~cyl,data = mtcars,notch=TRUE,varwidth=TRUE)
+#两个交叉因子的箱线图
+mtcars$cyl.f<-factor(mtcars$cyl,levels = c(4,6,8),labels=c("4","6","8"))
+mtcars$am.f<-factor(mtcars$am,levels=c(0,1),labels = c("auto","sta"))
+boxplot(mpg~am.f*cyl.f,data=mtcars,varwidth=TRUE,col=c("red","green"))
+#小提琴图vioplot包的vioplot():vioplot(x1,x2,...,names=,col=)
+
+#点图:dotchart(x,labels=),groups=选定一个因子，用以指定x中元素的分组方式。如果这样，gcolor=可以控制不同组标签的颜色，cex=可控制标签大小
+dotchart(mtcars$mpg,labels=row.names(mtcars),cex=.7,main = "ye",xlab = "yt")
+x<-mtcars[order(mtcars$mpg),]
+x$cyl<-factor(x$cyl)
+x$color[x$cyl==4]<-"red"
+x$color[x$cyl==6]<-"yellow"
+x$color[x$cyl==8]<-"green"
+dotchart(x$mpg,labels = row.names(x),cex=.7,groups = x$cyl,gcolor = "black",color = x$color,pch = 19)
+#Hmisc包的dotchart2许多功能的点图函数
+
+
+#基本统计分析
+#描述性统计分析
+vars<-c("mpg","hp","wt")
+#描述性统计量summary()
+summary(mtcars[vars])
+#sapply(x,FUN,options):FUN可以是mean,sd,var,min,max,median,length,range,quantile等，fivenum()返回图基5数（最小值，下四分位，中位，上四分位和最大）
+mystats<-function(x,na.omit=FALSE){if(na.omit)
+  x<-x[!is.na(x)]
+m<-mean(x)
+n<-length(x)
+s<-sd(x)
+skew<-sum((x-m)^3/s^3)/n     #偏度
+kurt<-sum((x-m)^4/s^4)/n-3    #峰度
+return(c(n=n,mean=m,stdes=s,skew=skew,kurtosis=kurt))}
+sapply(mtcars[vars],mystats)
+#Hmisc包的describe():返回变量和观测的数量、缺失值和唯一值的数目、均值、分位数、最大最小值
+describe(mtcars[vars])
+#pastecs包的stat.desc():stat.desc(x,basic=TRUE,desc=TRUE,norm=FALSE,p=.95)
+#basic=ture:默认值，计算其中所有值、空值、缺失值的数量，最小最大值，值域，总和
+#desc=true:默认值，计算中位数，均值，标准误，95%的置信区间，方差，标准差，变异系数
+#norm=true:不是默认值，返回正态分布统计量，包括偏度和峰度（及显著性），shapiro-wilk正态检验结果
+stat.desc(mtcars[vars],norm = TRUE)
+#psych包的describe():计算非缺失值的数量、均值、标准差、中位数、截尾均值、绝对中位差、最小最大值、值域、偏度峰度、标准误
+describe(mtcars[vars])
+
+#分组计算描述性统计量
+#aggregate()
+aggregate(mtcars[vars],by=list(am=mtcars$am),dstats)  #list指定的标签，书上说aggregate()每次只能调用使用平均数、标准差这样的单返回值的函数，但我实验可以返回若干统计量
+#by(data,INDICES,FUN)，INDICES是一个因子或因子组成的列表，定义了分组
+dstats<-function(x)(c(mean=mean(x),sd=sd(x)))
+by(mtcars[vars],mtcars$am,dstats)  #相当于by(warpbreaks[, 1:2], warpbreaks[,"tension"], summary)
+#doBy包的summaryBy():summaryBy(formula,data=dataframe,FUN=function):formula格式：var1+var2+...+varN~groupvar1+groupvar2+...groupvarN,~左侧的变量是需要分析的数值型变量，右侧是类别型分组变量
+summaryBy(mpg+hp+wt~am,data=mtcars,FUN=mystats)
+#psych包的describe.by()计算和describe相同的描述性统计量，只是按照一个或多个分组变量分层
+describe.by(mtcars[vars],mtcars$am)
+#reshape????包：dfm<-melt(dataframe,measure.vars=y,id.vars=g)，dataframe是数据，y是向量指明了要进行概述的数值型变量，默认使用所有变量，g是由一个或多个分组变量组成的向量
+#cast(dfm,groupvar1+groupvar2+...+variable~.,FUN)
+dfm<-melt(mtcars,measure.vars = c("mpg","hp","wt"),id.vars=c("am","cyl"))
+cast(dfm,am+cyl+variable~.,dstats)
+
+#频数表和列联表
+#生成频数表：
+#table(var1,var2,...,varN)使用n个类别型变量创建一个n维列联表
+#xtabs(formula,data)
+#prop.table(table,margins)依margins定义的边际列表将表中条目表示为分数形式
+#margin.table(table,margins)依margins定义的边际列表计算表中条目的和
+#addmargins(table,margins)将概述边margins放入表中
+#ftable(table)创建紧凑的“平铺”式列联表
+#一维
+mytable<-with(Arthritis,table(Improved))
+prop.table(mytable)
+#二维
+#mytable<-table(a,b):a行，b列，xtabs(~a+b,data=mydata)
+mytable<-xtabs(~Treatment+Improved,data=Arthritis)
+#margin.table()和prop.table()分别生成边际频数和比例：margin.table(data,margin),margin下标维度
+margin.table(mytable,1)
+prop.table(mytable,2)
+prop.table(mytable)
+#addmargins()默认为表中所有变量创建边际和
+addmargins(mytable)
+addmargins(prop.table(mytable))
+addmargins(prop.table(mytable),1)
+#table()默认忽略缺失值NA，要将其视为有效:useNA="ifany"
+#gmodels包的CrossTable():有很多选项：计算行列、单元格的百分比，指定小数位数，进行卡方、fisher、mcnemar独立性检验，计算期望和（pearson、标准化、调整的标准化）残差，将缺失值作为一种有效值，进行行列标题标注，生成SAS,SPSS风格的输出
+CrossTable(Arthritis$Treatment,Arthritis$Improved)
+#多维
+#table(),xtabs(),margin.table(),prop.table(),addmargins(),ftable()
+mytable<-xtabs(~Treatment+Sex+Improved,data=Arthritis)
+ftable(mytable)
+margin.table(mytable,1)
+margin.table(mytable,2)
+margin.table(mytable,3)
+margin.table(mytable,c(1,3))
+ftable(prop.table(mytable,c(1,2)))
+ftable(addmargins(prop.table(mytable,c(1,2)),3))
+
+#独立性检验
+#卡方独立性检验chisq.test()
+mytable<-xtabs(~Treatment+Improved,data = Arthritis)
+chisq.test(mytable)
+mytable<-xtabs(~Improved+Sex,data=Arthritis)
+chisq.test(mytable)
+#fisher精确检验fisher.test()
+fisher.test(mytable)
+#cochran-mantel-haenszel检验mantelhaen.test()
+mytable<-xtabs(~Treatment+Improved+Sex,data=Arthritis)
+mantelhaen.test(mytable)
+#相关性度量：vcd包的assocstats()、kappa()
+mytable<-xtabs(~Treatment+Improved,data=Arthritis)
+assocstats(mytable)
+#结果可视化vcd包、ca包
+#将表转换为扁平格式
+table2flat<-function(mytable){
+  df<-as.data.frame(mytable)
+  rows<-dim(df)[1]
+  cols<-dim(df)[2]
+  x<-NULL
+  for(i in 1:rows){
+    for(j in 1:df$Freq[i]){
+      row<-df[i,c(1:(cols-1))]
+      x<-rbind(x,row)}
+  }
+  row.names(x)<-c(1:dim(x)[1])
+  return(x)}
+table2flat(mytable)
+
+#相关
+#相关类型：pearson、spearman,kendall,偏相关，多分格相关polychoric，多系列相关polyserial
+#pearson,spearman,kendall:cov()协方差，cor()相关系数：cor(x,use=,method=):use=指定缺失数据的处理方式，all.obs(报错)、everything(设为missing）、complete.obs(行删除)、pairwise.complete.obs(pairwise deletion),默认use="everything",method="pearson"
+states<-state.x77[,1:6]
+cov(states)
+cor(states)
+cor(states,method = "spearman")
+x<-states[,c(1:4)]
+y<-states[,c(5:6)]
+cor(x,y)
+#偏相关：ggm包的pcor():pcor(u,s):u是数值向量，前两个数值表示要计算相关系数的变量下标，其余的数值为条件变量的下标，s为协方差矩阵
+pcor(c(1,5,2,3,6),cov(states))
+#polycor包的hetcor()可以计算混合的相关矩阵，包括数值型变量的pearson积差相关，数值型变量和有序变量之间的多系列相关，有序变量间的多分格相关，二分变量间的四分相关
+
+#相关的显著性检验：cor.test():cor.test(x,y,alternative=,method=):xy要检验相关性的变量，alternative指定双侧还是单侧（two.side,less,greater),method有pearson,spearman,kendall)
+cor.test(states[,3],states[,5])
+#cor.test()每次只能检验一种相关关系，psych包的corr.test()可以做更多
+corr.test(states,use = "complete")
+#use=可取值"pairwise"或"complete"分别表示对缺失值执行成对删除或行删除，method=可取pearson,spearman,kendall
+#ggm包的pcor.test()检验在控制一个或多个额外变量时两个变量间的条件独立性：pcor.test(r,q,n),r是pcor()计算得到的偏相关系数，q为要控制的变量数，以数值表示位置，n为样本大小
+#psych包的r.test()
+
+#t检验
+#独立t
+#t.test(y~x,data):y是数值型变量，x是二分变量
+#t.test(y1,y2):y1,y2为各组数值
+#这里的t检验默认方差不齐，并使用welsh的修正自由度，可以添加var.equal=TRUE以假定方差相等
+t.test(Prob~So,data = UScrime)
+#非独立t:t.test(y1,y2,paired=TRUE)
+a<-sapply(UScrime[c("U1","U2")],function(x)(c(mean=mean(x),sd=sd(x))))
+with(UScrime,t.test(U1,U2,paired = TRUE))
+round(a,2)
+
+#非参数检验
+#两组独立：wilcoxon秩和检验：wilcox.test(y~x,data),wilcox.test(y1,y2)
+with(UScrime,by(Prob,So,median))
+wilcox.test(Prob~So,data = UScrime)
+sapply(UScrime[c("U1","U2")],median)
+with(UScrime,wilcox.test(U1,U2,paired = TRUE))
+#多组独立：kruskal-wallis检验:kruskal.test(y~A,data)y是数值型结果变量，A是拥有两个或更多水平的分组变量;各组不独立：friedman检验：friedman.test(y~A|B,data)B是用以认定匹配观测的区组变量
+#npmc包的npmc():3.1.3好像不能用
+
+
+#回归
+#回归类型：简单线性，多项式，多元线性，多变量，Logistic，泊松，Cox比例风险，时间序列，非线性，非参数，稳健
+#普通最小二乘OLS：简单线性，多项式，多元线性；是最常见的
+#lm()拟合回归模型:myfit<-lm(formula,data) formula是模型形式：Y~X1+X2+...+Xk
+#~  分隔符号，左边为响应变量，右边为解释变量
+#+  分隔预测变量
+#:  预测变量的交互项 y~x+z+x:z
+#*  y~x*z == y~x+z+x:z
+#^  交互项达到某个次数 y~(x+z+w)^2 == y~x+z+w+x:z+x:w+z:w
+#.  包含除因变量外的所有变量 y~. == y~x+z+w
+#-  从等式中移除某个变量
+#-1  删除截距项
+#I()  从算术角度来解释括号中的元素  y~x+I((z+w)^2) == y~x+h，h=z+w的平方，看作一个新变量
+#function  log(y)~x+z+w表示通过x,z,w预测log(y)
+#summary()拟合模型的详细结果,coefficients()模型参数,confint()置信区间,fitted()预测值,residuals()残差值,anova()方差分析表,vcov()协方差矩阵,AIC()赤池信息,plot()评价拟合模型的诊断图,predict()新数据的响应变量值
+#简单线性回归
+fit<-lm(weight~height,data = women)
+summary(fit)
+fitted(fit)
+plot(women$height,women$weight)
+abline(fit)
+#多项式回归
+fit2<-lm(weight~height+I(height^2),data=women)
+summary(fit3)
+plot(women$height,women$weight)
+lines(women$height,fitted(fit3))
+#线性模型与非线性模型：y~b0+b1*exp(x/b2)这种类型才能算非线性模型，一般的多项式或变量变换可以变成线性的也算线性，非线性用nls()进行拟合
+fit3<-lm(weight~height+I(height^2)+I(height^3),data=women)
+#car包的scatterplot()
+par(mfrow=c(1,1),mai=c(0.9,0.9,0.3,0.2))
+scatterplot(weight~height,data = women,spread=FALSE,lty.smooth=2,pch=19)  #lty.smooth=2设置拟合曲线类型，spread=FALSE删除残差正负均方根在平滑曲线上的展开和非对称信息
+#多元线性回归
+#lm()需要数据框
+states<-as.data.frame(state.x77[,c("Murder","Population","Illiteracy","Income","Frost")])
+#car包的scatterplotMatrix()
+scatterplotMatrix(states,spread = FALSE,lty.smooth=2)
+fit<-lm(Murder~Population+Illiteracy+Income+Frost,data = states)
+summary(fit)
+#有交互项的多元线性回归
+fit<-lm(mpg~hp*wt,data=mtcars)
+summary(fit)
+#effects包的effect():用图形展示交互项结果:plot(effect(term,mod,xlevels),multiline=TRUE):term是模型要画的项,mod是lm()拟合的模型，xlevels是列表指定变量要设定的常量值，multiline=TURE添加相应直线
+plot(effect("hp:wt",fit,xlevels=list(wt=c(2.2,3.2,4.2))),multiline=TRUE)
+
+#回归诊断:confint()
+confint(fit)
+#标准方法：对lm()返回对象用plot()
+fit<-lm(weight~height+I(height^2),data=women)
+par(mfrow=c(2,2))
+plot(fit)
+#正态性：看Q-Q图，点基本落在45度直线上；独立性：只能从收集的数据中验证；线性：看residuals vs fitted图是否直线；方差齐性：scale-location水平线周围点随机分布；residuals vs leverage：找离群点、高杠杆值点、强影响点
+#改进的方法：car包
+#qqPlot()分位数比较图，durbinWatsonTest()对误差自相关性做durbin-watson检验，crPlots()成分与残差图，ncvTest()对非恒定的误差方差做得分检验，spreadLevelPlot()分散水平检验，outlierTest()bonferroni离群点检验
+#avPlots()添加的变量图形，inluencePlot()回归影响图，scatterplot()增强的散点图，scatterplotMatrix()增强的散点图矩阵,vif()方差膨胀因子
+#正态性
+qqPlot(fit,labels = row.names(states),id.method = "identify",simulate = TRUE,main = "qqplot") #id.method="identyfy"图形绘制完后，用鼠标点击图形内的点将会标注label选项的设定值，simulate=TRUE置信区间用参数自助法
+#residplot()生成学生化残差柱状图，并添加正态曲线、核密度曲线、轴须图
+residplot<-function(fit,nbreaks=10){
+  z<-rstudent(fit)
+  hist(z,breaks = nbreaks,freq = FALSE)
+  rug(jitter(z),col = "brown")
+  curve(dnorm(x,mean = mean(z),sd=sd(z)),add = TRUE,col="blue",lwd=2,lty=2)
+  lines(density(z)$x,density(z)$y,col="red")
+  legend("topright",legend = c("normal curve","kernel density"),lty = 1:2,col=c("blue","red"),cex=.7)
+}
+residplot(fit)
+#误差独立性：DURBIN-WATSON检验
+durbinWatsonTest(fit)  #自相关不显著，独立
+#durbinWatsonTest()用自助法来导出p值，若simulate=TRUE则每次运行结果略有不同
+#线性：成分残差图：car包的crPlots()
+crPlots(fit)
+#方差齐性：car包的ncvTest()零假设为方差不变，显著则方差不齐，spreadLevelPlot()添加了最佳拟合曲线的散点图，展示标准化残差绝对值与拟合值的关系
+ncvTest(fit)
+spreadLevelPlot(fit)  #suggested power transformation是说经过p次幂变换，非恒定的误差方差将会平稳，图形若不水平，则可以用幂变换，差不多就不用变换了
+#线性模型假设的综合验证：gvlma包的gvlma()
+summary(gvlma(fit))
+#多重共线性：vif(),vif^0.5>2表明存在多重共线性问题
+vif(fit)
+sqrt(vif(fit))>2
+
+#异常观测值：离群点、高杠杆值点、强影响点
+#离群点：outlierTest(),若显著，测必须删除该离群点再检验是否还有其他离群点。还有之前的Q-Q图
+#高杠杆值点：hat statistic判断，帽子均值p/n,p是模型估计的参数数目（包含截距项）,n是样本量，帽子值大于帽子均值的2或3倍，认定为高杠杆值点
+hat.plot<-function(fit){
+  p<-length(coefficients(fit))
+  n<-length(fitted(fit))
+  plot(hatvalues(fit))
+  abline(h=c(2,3)*p/n,col="red",lty=2)
+  identify(1:n,hatvalues(fit),names(hatvalues(fit)))
+}
+hat.plot(fit)
+#强影响点：cook距离，cook's D>4/(n-k-1)，n是样本量，k是预测变量数目
+cutoff<-4/(nrow(states)-length(fit$coefficients)-2)
+plot(fit,which = 4,cook.levels = cutoff)
+
+abline(h=cutoff,lty=2,col="red")
+avPlots(fit,ask = FALSE,onepage=TRUE,id.method="identify")
+influencePlot(fit,id.method = "identify")
+
+#改进措施：删除观测点、变量变换、添加或删除变量、用其他回归方法
+#谨慎删除观测点
+#常用的变量变换：y^-2,y^-1,y^-0.5,log(y),y^0.5,y^2，若y是比例数，常用logit变换ln(y/(1-y))
+#car包的powerTransform()
+summary(powerTransform(states$Murder))
+#BOX-TIDWELL变换：boxTidwell()
+boxTidwell(Murder~Population+Illiteracy,data=states)
+#岭回归专门处理多重共线性问题
+#其他方法：离群点、强影响点：稳健回归替代OLS回归；非正态，非参数回归模型；非线性回归模型。还有广义线性模型
+
+#选择最佳回归模型
+#模型比较
+fit1<-lm(Murder~Population+Illiteracy+Income+Frost,data=states)
+fit2<-lm(Murder~Population+Illiteracy,data=states)
+anova(fit2,fit1)
+#AIC(),越小越好，ANOVA需要嵌套模型，AIC方法不需要，嵌套模型即一个包含另一个
+AIC(fit1,fit2)
+#逐步回归和全子集回归
+#逐步回归：MASS包的stepAIC()
+stepAIC(fit1,direction = "backward")
+#全子集回归：nbest=2,则先展示最佳的单变量模型，然后双变量模型，以此类推leaps包的regsubsets()
+leaps<-regsubsets(Murder~Population+Illiteracy+Income+Frost,data=states,nbest = 4)
+plot(leaps,scale="adjr2")
+subsets(leaps,statistic="cp")
+abline(1,1,lty=2,col="red")
+
+#deep analysis:width ability and variable relative important
+#jiaochayanzheng
+#bootstrap package's crossval()
+shrinkage<-function(fit,k=10){
+  require(bootstrap)
+  theta.fit<-function(x,y){lsfit(x,y)}
+  theta.predict<-function(fit,x){cbind(1,x) %*% fit$coef}
+  x<-fit$model[,2:ncol(fit$model)]
+  y<-fit$model[,1]
+  results<-crossval(x,y,theta.fit,theta.predict,ngroup=k)
+  r2<-cor(y,fit$fitted.values)^2
+  r2cv<-cor(y,results$cv.fit)^2
+  cat("Original R-square =",r2,"\n")
+  cat(k,"Fold Cross-Validated R-square =",r2cv,"\n")
+  cat("Change =",r2-r2cv,"\n")
+}
+#shrinkage() build matrix including predict variable and prediction,results conclude original R-square and cross-validated R-square
+fit<-lm(Murder~Population+Income+Illiteracy+Frost,data=states)
+shrinkage(fit)
+fit2<-lm(Murder~Population+Illiteracy,data = states)
+shrinkage(fit2)
+#R-square change less ,prediction better
+#relative important:
+zstates<-as.data.frame(scale(states))
+zfit<-lm(Murder~Population+Income+Illiteracy+Frost,data = zstates)
+coef(zfit)
+#relaimpo package
+#relative weight:
+relweights<-function(fit,...){
+  R<-cor(fit$model)
+  nvar<-ncol(R)
+  rxx<-R[2:nvar,2:nvar]
+  rxy<-R[2:nvar,1]
+  svd<-eigen(rxx)
+  evec<-svd$vectors
+  ev<-svd$values
+  delta<-diag(sqrt(ev))
+  lambda<-evec %*% delta %*% t(evec)
+  lambdasq<-lambda^2
+  beta<-solve(lambda) %*% beta^2
+  import<-(rawwgt/rsquare)*100
+  lbls<-names(fit$model[2:nvar])
+  rownames(import)<-lbls
+  colnames(import)<-"Weights"
+  barplot(t(import),names.arg = lbls,ylab = "% of r-square",xlab="predictor variables",main = "relative important of predictor variable",sub = paste("r-square=",round(rsquare,digits = 3)),...)
+  return(import)
+}
+fit<-lm(Murder~Population+Illiteracy+Income+Frost,data=states)
+relweights(fit,col="lightgrey")
+
+#anova
+#anova model fitting：aov(formula,data=dataframe)
+#formula：y~A，y~x+A(cov and one varialbe)，y~A*B,Y~x1+x2+A*B,y~B+A(B is block variable,random block design),y~A+error(subject/A)one variable within subject，y~B*W+error(subject/W)subject:W,block:B，within subject is repeat measure
+#表达式的顺序很重要，首先是协变量，然后是主效应，再是双因素交互，再是三因素交互，对于主效应，越基础性的变量放前面，如性别放在实验处理之前
+#car包的Anova()
+#one-way anova
+attach(cholesterol)
+table(trt)
+fit<-aov(response~trt)
+summary(fit)
+plotmeans(response~trt,xlab = "treatment",ylab = "response") #gplots package's plotmeans() can draw the means plot with CI
+detach(cholesterol)
+#multiple compare
+#TukeyHSD():与HH包不兼容，载入HH会使该函数失效，用detach("package::HH")将它从路径中删除，然后再调用
+TukeyHSD(fit)
+par(las=2)
+par(mar=c(5,8,4,2))
+plot(TukeyHSD(fit))
+#multcomp包的glht()即适用线性模型，又适用于广义线性模型
+par(mar=c(5,4,6,2))
+tuk<-glht(fit,linfct=mcp(trt="Tukey"))
+plot(cld(tuk,level=.05),col="lightgrey") #有相同字母的组说明均值差异不显著
+#评估检验的假设条件
+#QQ图检验正态性假设：qqPlot(lm(response~trt,data=cholesterol),simulate=TRUE,labels=FALSE),qqPlot()要求用lm()拟合
+#方差齐性：bartlett检验：bartlett.test(response~trt,data=cholesterol),还有fligner-killeen检验：fligner.test(),brown-forsythe检验：HH包的hov(),方差齐性检验对离群点很敏感，可用outlierTest()检验离群点
+
+#ANCOVA
+data(litter,package = "multcomp")
+attach(litter)
+table(dose)
+aggregate(weight,by=list(dose),FUN=mean)
+fit<-aov(weight~gesttime+dose)
+summary(fit)
+#调整的组均值：effects包的effect():effect("dose",fit)
+#自定义对照多重比较
+contrast<-rbind("no drug vs. drug"=c(3,-1,-1,-1))
+summary(glht(fit,mlinfct=mcp(dose=contrast))) #意图是用rbind()比较用药和没用药，但运行了好像没效果
+#评估假设条件：正态性和同方差性，另外还有回归斜率相同：看交互项的显著性，显著则斜率不同，不显著则相同
+#不需要假设斜率相同的非参数ANCOVA：sm包的sm.ancova()
+#HH包的ancova()绘制因变量、协变量和因子之间的关系图
+ancova(weight~gesttime+dose,data=litter)
+
+#双因素ANOVA
+attach(ToothGrowth)
+table(supp,dose)
+aggregate(len,by=list(supp,dose),FUN=mean)
+fit<-aov(len~supp*dose)
+summary(fit)
+interaction.plot(dose,supp,len,type = "b") #或gpolts包的：plotmeans(len~interaction(supp,dose,sep=" "),connect=list(c(1,3,5),c(2,4,6)))
+#HH包的：interaction2wt(len~supp*dose)
+
+#repeat measure anova
+#type组间，conc组内
+w1b1<-subset(CO2,Treatment=='chilled')
+fit<-aov(uptake~conc*Type+Error(Plant/conc),w1b1)
+summary(fit)
+par(las=2)
+par(mar=c(10,4,4,2))
+with(w1b1,interaction.plot(conc,Type,uptake,type = "b",col=c("red","blue"),pch=c(16,18)))
+boxplot(uptake~Type*conc,data=w1b1,col=c("gold","green"))
+#通常处理的数据集是wide format，即列是变量，行是观测，不过在处理重复测量设计时，需要long format，才能拟合模型，在long format中因变量的每次测量都要放到它独有的行中，reshape包可以方便的将数据转换为相应的格式
+#这里，传统的重复测量方差分析，假设任意组内因子的协方差矩阵为球形，并且任意组内因子两水平间的方差之差都相等，但在现实中这种假设不可能满足，可用以下备选方法：
+#lme4包的lmer()拟合线性混合模型
+#car包的Anova()调整传统检验统计量以弥补球形假设的不满足
+#nlme包的gls()拟合给定方差-协方差结构的广义最小二乘模型
+#多元方差分析对重复测量数据进行建模
+
+#MANOVA
+#one variable MANOVA
+attach(UScereal)
+y<-cbind(calories,fat,sugars)
+aggregate(y,by=list(shelf),FUN=mean)
+cov(y)
+fit<-manova(y~shelf)
+summary(fit)
+summary.aov(fit) #输出单变量结果
+#单因素MANOVA有两个前提假设，一个是多元正态性，一个是方差-协方差同质性
+#多元正态性：p*1的多元正态随机向量x,均值u,协方差矩阵E，那么x与u的马氏距离的平方服从df为p的卡方分布
+center<-colMeans(y)
+n<-nrow(y)
+p<-ncol(y)
+cov<-cov(y)
+d<-mahalanobis(y,center,cov)
+coord<-qqplot(qchisq(ppoints(n),df=p),d)
+abline(a=0,b=1)
+identify(coord$x,coord$y,labels = row.names(UScereal))
+#点全部落在斜率为1，截距为0的直线上，则表明数据服从多元正态分布
+#方差-协方差同质性：Box's M检验：目前没有比较好的方法
+#mvoutlier包的ap.plot()可检验多元离群点：aq.plot(y)
+#稳健或非参数MANOVA：前面提到的两个假设不满足或多元离群点。稳健单因素MANOVA：rrcov包的Wilks.test(),非参数MANOVA:vegan包的adonis()
+Wilks.test(y,shelf,method = "mcd")
+
+#用回归做ANOVA:回归包含了ANOVA
+#ANOVA:
+levels(cholesterol$trt)
+fit.aov<-aov(response~trt,data = cholesterol)
+summary(fit.aov)
+#回归：
+fit.lm<-lm(response~trt,data=cholesterol)
+summary(fit.lm)
+#lm()碰到因子时，会用一系列与因子水平相对应的数值型对照变量来代替因子，若有K个水平，则创建K-1个对照变量。R提供5种创建对照变量的内置方法，默认对照处理用于无序因子，正交多项式用于有序因子
+#contr.helmert  第二个水平对照第一个水平，第三个对照前两个均值。。。
+#contr.poly  基于正交多项式的对照，用于趋势分析（线性，二次，三次等）和等距水平的有序因子
+#contr.sum  对照变量之和限制为0，对各水平的均值与所有水平的均值进行比较
+#contr.treatment  各水平对照基线水平（默认第一个水平），也称虚拟编码
+#contr.SAS  类似于contr.treatment，只是基线水平变成了最后一个
+#通过设定contrasts，可以修改lm()中默认的对照方法：如fit.lm<-lm(response~trt,data=cholesterol,contrasts="contr.helmert")
+#或options()修改：options(contrast=c("contr.SAS","contr.helmert")),将无序因子对照方法为contr.SAS,有序因子为contr.helmert，对照方法不只是线性模型，也能应用于其他模型，包括广义线性模型等
+
+#POWER ANALYSIS:pwr包
+#四个指标：sample size,alpha,power,effect size
+#pwr包：算cohen' d统计功效，知道三个量，则可算出第四个
+#pwr.2p.test()  两比例（n相等）
+#pwr.2p2n.test()  两比例（n不相等）
+#pwr.anova.test()  平衡的单因素ANOVA
+#pwr.chisq.test()  卡方检验
+#pwr.f2.test()  广义线性模型
+#pwr.p.test()  比例（单样本）
+#pwr.r.test()  相关关系
+#pwr.t.test()  t检验
+#pwr.t2n.test()  t检验（n不相等）
+
+#pwr.t.test(n=,d=,sig.level=,power=,alternative=):n是sample size,d是effect size(d=(u1-u2)/sd),sig.level是alpha,power是power,type是检验类型(two.sample,one.sample,paired;default is two.sample),alternative是(two.sided,less,greater;default is two.sided)
+pwr.t.test(d=.8,sig.level = .05,power = .9,type = "two.sample")  #求样本大小
+pwr.t.test(n=20,d=.5,sig.level = .01)  #求power大小
+#pwr.t2n.test(n1=,n2=,...):n1,n2表示两组不同样本，其他跟pwr.t.test()一样
+
+#pwr.anova.test(k=,n=,f=,sig.level=,power=):k是组数，n是各组样本数，f是effect size(f=sqrt((sum((ni/N)*(ui-u)))^2/sd^2)
+pwr.anova.test(k=5,f=.25,sig.level = .05,power = .8)  #求各组样本
+#pwr.r.test(n=,r=,sig.level=,power=,alternative=):r是effect size,也就是rou,相关系数
+pwr.r.test(r=.25,sig.level = .05,power = .9,alternative = "greater")
+#pwr.f2.test(u=,v=,f2=,sig.level = ,power = ):u和v是分子自由度和分母自由度，f2是effect size(f2=(R12^2-R1^2)/(1-R12^2)),多元回归中分母自由度N-K-1,N是总观测数，K是预测变量数
+#pwr.2p.test(h=,n=,sig.level=,power=):h是effect size(h=2arcsin(sqrt(p1))-2arcsin(sqrt(p2))),可用ES.h(p2,p2)来计算
+pwr.2p.test(h=ES.h(.65,.6),sig.level = .05,power = .9,alternative = "greater")
+#pwr.chisq.test(w=,n=,df=,sig.level=,power=)w是effect size,n是总样本，df是df(w=sum((p0i-p1i)^2/p0i)),p0i是H0第i个单元格概率，ES.w2(p)可计算w,这里p是双因素概率表
+prob<-matrix(c(.42,.28,.03,.07,.1,.1),byrow = TRUE,nrow = 3)
+pwr.chisq.test(w=ES.w2(prob),df=2,sig.level=.05,power=.9)
+#功效分析中，预期效应值是最难决定的参数，通常需要对主题有一定的了解，并有相应的测量经验，过去的研究数据可以用来计算效应值，但面对全新的研究以下是一些一般性基准：
+#检验类型  效应值  小  中  大
+#t         d   .2    .5   .8
+#anova     f   .1   .25   .4
+#线性模型  f2  .02  .15  .35
+#比例检验  h   .2    .5   .8
+#chisq     w   .1    .3   .5
+#单因素ANOVA中检测显著效应所需样本
+es<-seq(.1,.5,.01)
+nes<-length(es)
+samsize<-NULL
+for(i in 1:nes){
+  result<-pwr.anova.test(k=5,f=es[i],sig.level = .05,power = .9)
+  samsize[i]<-ceiling(result$n)
+}
+plot(samsize,es,type="l")
+
+#检验各种效应值下的相关性所需的样本量曲线
+r<-seq(.1,.5,.01)
+nr<-length(r)
+p<-seq(.4,.9,.1)
+np<-length(p)
+samsize<-array(numeric(nr*np),dim=c(nr,np))
+for(i in 1:np){
+  for(j in 1:nr){
+    result<-pwr.r.test(n=NULL,r=r[j],sig.level = .05,power = p[i],alternative = "two.sided")
+    samsize[j,i]<-ceiling(result$n)
+  }
+}
+xrange<-range(r)
+yrange<-round(range(samsize))
+colors<-rainbow(length(p))
+plot(xrange,yrange,type="n")
+for(i in 1:np){
+  lines(r,samsize[,i],type="l",lwd=2,col=colors[i])
+}
+abline(v=0,h=seq(0,yrange[2],50),lty=2,col="grey89")
+abline(h=0,v=seq(xrange[1],xrange[2],.02),lty=2,col="gray89")
+legend("topright",title = "power",as.character(p),fill=colors)
+
+#other package
+#piface package:install.packages("piface",repos="http://R-Forge.R-project.org"),http://r-forge.r-project.org/projects/piface/
+#asypow  通过渐进似然比方法计算功效
+#PwrGSD  组序列设计的功效分析
+#pamm   混合模型中随机效应的功效分析
+#powerSurvEpi   流行病研究的生存分析中功效和样本量的计算
+#powerpkg   患病同胞配对法和TDT(Transmission disequilibrium test)设计的功效分析
+#powerGWASinteraction   GWAS交互作用的功效计算
+#pedantics   一些有助于种群基因研究功效分析的函数
+#gap   一些病例队列研究设计中计算功效和样本量的函数
+#ssize.fdr   微阵列实验中样本量的计算
+#MBESS包也包含了一些
+
+#中级绘图
+#散点图
+attach(mtcars)
+plot(wt,mpg,pch=19)
+abline(lm(mpg~wt),col="red",lwd=2,lty=1)
+lines(lowess(wt,mpg),col="blue",lwd=2,lty=2)
+#R有两个平滑曲线拟合函数：lowess()和loess(),loess()是基于lowess()表达式版本的更新和更强大的拟合函数，这两个函数的默认值不同
+#car包的scatterplot()增强了散点图的许多功能,除了下面这个例子，还有许多其他功能，可以help
+scatterplot(mpg~wt|cyl,data = mtcars,lwd=2,legend.plot=TRUE,id.method="identify",labels = row.names(mtcars),boxplots="xy")  #mpg~wt|cyl表示按条件绘图(按cyl的水平分别绘制mpg和wt的关系图)
+#散点图矩阵
+#pairs()创建基础的散点图矩阵
+pairs(~mpg+disp+drat+wt,data=mtcars)  #upper.panel=NULL将只生成下三角图形
+#car包的scatterplotMatrix()也可生成散点图矩阵，并有以下可选操作：
+#以某个因子为条件绘制；包含线性和平滑拟合曲线(默认）；在主对角线放置箱线图、密度图或直方图；在各单元格的边界添加轴须图
+scatterplotMatrix(~mpg+disp+drat+wt,data=mtcars,spread=FALSE,lty.smooth=2) #spread=是分散度和对称信息的直线，核密度曲线和轴须图也是默认
+scatterplotMatrix(~mpg+disp+drat+wt|cyl,data=mtcars,spread=FALSE,lty.smooth=2,diagonal="histogram") #diagonal="histogram"是换成直方图，默认回归直线拟合整个样本，但可用by.groups=TRUE来依据各子集分别生成拟合曲线
+#gclus包的cpairs()提供了一个有趣的散点图矩阵变种，含有可以重排矩阵中变量位置的选项，可以让相关性更高的变量更靠近主对角线，还能对各单元格进行颜色编码,可用于变量数多，变量间相关变化很大时
+library(gclus)
+cor(mtcars[c("mpg","wt","disp","drat")])
+mydata<-mtcars[c(1,3,5,6)]
+mydata.corr<-abs(cor(mydata))
+mycolors<-dmat.color(mydata.corr)
+myorder<-order.single(mydata.corr)
+cpairs(mydata,myorder,panel.colors = mycolors,gap=.5)
+#高密度散点图：数据点叠加很多时，识别困难，这时可用封箱、颜色和透明度作指标
+set.seed(1234)
+n<-10000
+c1<-matrix(rnorm(n,mean=0,sd=.5),ncol = 2)
+c2<-matrix(rnorm(n,mean = 3,sd=2),ncol = 2)
+mydata<-rbind(c1,c2)
+mydata<-as.data.frame(mydata)
+names(mydata)<-c("x","y")
+#smoothScatter()颜色密度来表示散点图
+with(mydata,smoothScatter(x,y))
+#hexbin包的hexbin()封箱图
+library(hexbin)
+with(mydata,{bin<-hexbin(x,y,xbins=50)
+plot(bin)})
+#IDPmisc包的iplot()颜色
+library(IDPmisc)
+with(mydata,iplot(x,y))
+#三维散点图：scatterplot3d包的scatterplot3d():scatterplot3d(x,y,z)
+library(scatterplot3d)
+attach(mtcars)
+scatterplot3d(wt,disp,mpg)
+#scatterplot3d()许多其他的选项，设置图形符号、轴、颜色 、线条、网格线、突出显示、角度
+scatterplot3d(wt,disp,mpg,pch=16,highlight.3d = TRUE,type = "h")
+s3d<-scatterplot3d(wt,disp,mpg,pch=16,highlight.3d = TRUE,type = "h")
+fit<-lm(mpg~wt+disp)
+s3d$plane3d(fit)
+#旋转三维散点图：rgl包的plot3d():plot3d(x,y,z),还可以添加col=和size=等或Rcmdr包的scatter3d()
+library(rgl)
+attach(mtcars)
+plot3d(wt,disp,mpg,col="red",size=5)
+library(Rcmdr)
+scatter3d(wt,disp,mpg)  
+#scatter3d()可包含各种回归曲面，如线性、二次、平滑和附加等类型。默认添加线性平面，还有可用于交互式识别点的选项，?scatter3d
+#气泡图：用二维点的大小表示第三个变量：symbols():symbols(x,y,circle=radius),可以是圆圈、方形、星形、温度计和箱线
+r<-sqrt(disp/pi)
+symbols(wt,mpg,circles = r,inches = .3,fg="white",bg="lightblue")
+text(wt,mpg,rownames(mtcars),cex=.6)
+detach(mtcars)
+#气泡图用得少，商业应用比较多
+
+#拆线图：plot(x,y,type=),lines(x,y,type=)
+#type=可选值：p只有点，l只有线,o实心点和线,b线连接点、c线连接点但不画点，s或S阶梯线，h直方图式的垂直线，n不生成任何点和线（通常用来为后面的命令创建坐标轴）
+#plot()调用时是创建一幅新图，lines()是在已存在的图形上添加信息，不能自己生成图形
+Orange$Tree<-as.numeric(Orange$Tree)
+ntrees<-max(Orange$Tree)
+xrange<-range(Orange$age)
+yrange<-range(Orange$circumference)
+plot(xrange,yrange,type="n",xlab="age",ylab="cirumference") #创建图形，坐标轴没内容
+colors<-rainbow(ntrees)
+linetype<-c(1:ntrees)
+plotchar<-seq(18,18+ntrees,1)
+for(i in 1:ntrees){
+  tree<-subset(Orange,Tree==i)
+  lines(tree$age,tree$circumference,type = "b",lwd=2,lty=linetype[i],col=colors[i],pch=plotchar[i])   #加线条
+}
+legend(xrange[1],yrange[2],1:ntrees,cex=.8,col = colors,pch=plotchar,lty=linetype,title = "tree")  #加图例
+
+#相关图：corrgram包的corrgram():corrgram(x,order=,panel=,text.panel=,diag.panel=),x是wide format dataframe,当order=TRUE时，相关矩阵使用主成分分析法对变量重排序，
+#lower.panel和upper.panel分别设置对角线下和上的元素类型，text.panel和diag.panel控制对角线元素类型，可用的panel值：非对角线（panel.pie,panel.shade,panel.ellipse,panel.pts),对角线（panel.minmax,panel.txt)，这些都可以用NULL，也就是空白
+cor(mtcars)
+library(corrgram)
+corrgram(mtcars,order = TRUE,lower.panel = panel.shade,upper.panel = panel.pie,text.panel = panel.txt)
+#尽量明确变量类型，如有序因子，无序因子，数值型等，有助于R使用适合的统计方法
+#还可以在col.corrgram()中et colorRampPallette()来指定四种颜色
+col.corrgram<-function(ncol){colorRampPalette(c("darkgoldenrod4","burlywood1","darkkhaki","darkgreen"))(ncol)}
+corrgram(mtcars,order = TRUE,lower.panel = panel.shade,upper.panel = panel.pie,text.panel = panel.txt)    #没有不同，不知道哪里有问题
+
+#马赛克图：mosaicplot()或vcd包的mosaic():mosaic(table),table是数组形式的列联表;或mosaic(formula,data=)data是一个数据框或表格，添加shade=TRUE将根据拟合模型的pearson残差值对图形上色，添加legend=TRUE将展示残差的图例
+ftable(Titanic)
+library(vcd)
+mosaic(Titanic,shade=TRUE,legend=TRUE)
+mosaic(~Class+Sex+Age+Survived,data=Titanic,shade=TRUE,legend=TRUE)
+#example(mosaic)
+
+#重抽样和自助法
+#置换检验：思路：1与参数方法类似，计算观测数据的t，称为t0;2将样本随机分配到各组；3重新计算新观测的t;4重复2~3，就有（n选m)种组合；5将所有组合的t排序，这便是基于样本数据的经验分布，如果t0落在经验分布95%外，则显著
+#置换方法和参数方法都计算了相同的t，但置换并不是将统计量与理论分布进行比较，而是将其与置换观测数据后获得的经验分布比较，根据统计量值的极端性判断是否有足够理由拒绝零假设
+#coin包对于独立性问题提供了非常全面的置换检验框架，lmPerm包则专门用来做方差分析和回归分析的置换检验
+#置换检验都是用伪随机数来从所有可能的排列组合中进行抽样，因此每次检验的结果都有所不同，可以设定随机种子为1234，以此固定所用的随机数
+#coin包做置换检验：
+#两样本和K样本   oneway_test(y~A)
+#含一个分层因子的两样本和K样本   oneway_test(y~A|C)
+#wilcoxon-mann-whitney秩和检验   wilcox_test(y~A)
+#kruskal-wallis检验   kruskal_test(y~A)
+#pearson卡方检验   chisq_test(A~B)
+#cochran-mantel-haenszel检验   cmh_test(A~B|C)
+#线性关联检验   lbl_test(D~E)
+#spearman检验   spearman_test(y~x)
+#friedman检验   friedman_test(y~A|C)
+#Wilcoxon符号秩检验   wilconxsign_test(y1~y2)
+#y和x是数值变量，A和B是分类因子，C是类别型区组变量，D和E是有序因子，y1和y2是相匹配的数值变量
+#以上函数形式：function(formula,data,distribution=),formula要检验变量间的关系，data数据框，distribution指定经验分布在零假设条件下的形式：exact,asymptotic,approximate;exact用于两样本，distribution="approxiamate(B=#)"#是要重复的次数
+
+#coin包中，类别变量和序数变量必须转化为因子和有序因子，数据是数据框
+#独立两样本和K样本检验
+#虚拟数据的t检验与单因素置换检验
+library(coin)
+score<-c(40,57,45,55,58,57,64,55,62,65)
+treatment<-factor(c(rep("a",5),rep("b",5)))
+mydata<-data.frame(treatment,score)
+t.test(score~treatment,data = mydata,var.equal=TRUE)   #传统t，结果显著
+oneway_test(score~treatment,data = mydata,distribution="exact")   #精确检验，结果不显著，所以作结论还要慎重（可以多些数据），感觉精确检验更可信
+#wilcoxon秩和检验
+library(MASS)
+UScrime<-transform(UScrime,So=factor(So))
+wilcox_test(Prob~So,data = UScrime,distribution="exact")   #wilcox.test()也是用的精确分布
+#近似K样本置换检验
+library(multcomp)
+set.seed(1234)
+oneway_test(response~trt,data=cholesterol,distribution=approximate(B=9999))   #9999次置换
+#列联表的独立性：chisq_test()或cmh_test(),用置换检验判断两类别型变量的性，当数据可根据第三个类别型变量进行分层时，需要用cmh_test(),若变量都是有序型，可用lbl_test()来检验是否存在线性趋势
+library(coin)
+library(vcd)
+Arthritis<-transform(Arthritis,Improved=as.factor(as.numeric(Improved)))  #有序因子变成数值再变成分类因子，有序因子生成线性趋势检验，分类因子是卡方检验，这里做卡方检验只是与前面对照，也可以做线性趋势检验
+set.seed(1234)
+#lbl_test(Treatment~Improved,data=Arthritis)   #线性趋势检验
+chisq_test(Treatment~Improved,data=Arthritis,distribution=approximate(B=9999))
+#数值变量间的独立性：spearman_test()
+states<-as.data.frame(state.x77)
+set.seed(1234)
+spearman_test(Illiteracy~Murder,data=states,distribution=approximate(B=9999))
+#两样本和K样本相关性检验：配对样本wilcoxsign_test()或重复测量friedman_test()
+library(coin)
+library(MASS)
+wilcoxsign_test(U1~U2,data = UScrime,distribution="exact")
+#coin包提供了一个置换检验的一般性框架，可以分析一组变量相对于其他任意变量，是否与第二组变量相互独立,尤其independence_test()从置换角度来思考大部分传统检验
+
+#lmPerm包的置换检验
+#lmPerm可做线性模型的置换检验。如lmp()和aovp()即lm()和aov()的修改版，能够进行置换检验，而非正态理论检验，他们的参数也类似，只额外添加了perm=，可选值Exact,Prob,SPR。精确检验只适用于小样本(<10),如果大于10,则perm="Exact"自动默认转为"Prob"，Prob是从所有可能的排列中不断抽样，直至估计的标准差在估计的P值0.1之下，判停准则由可选Ca参数控制，SPR用贯序概率比检验来判断何时停止抽样
+#简单回归和多项式回归
+library(lmPerm)
+set.seed(1234)
+fit<-lmp(weight~height,data=women,perm="Prob")
+summary(fit)
+fit<-lmp(weight~height+I(height^2),data=women,perm="Prob")
+summary(fit)    #Iter栏列出了要达到判停准则所需要的迭代次数
+#多元回归
+set.seed(1234)
+states<-as.data.frame(state.x77)
+fit<-lmp(Murder~Population+Illiteracy+Income+Frost,data=states,perm="Perm")
+summary(fit)   #得到的结果和正态假设得到的结果不一样，需要谨慎的审视数据
+#单因素方差分析和协方差分析
+library(lmPerm)
+library(multcomp)
+set.seed(1234)
+fit<-aovp(response~trt,data=cholesterol,perm="Prob")
+summary(fit)
+fit<-aovp(weight~gesttime+dose,data=litter,perm="Prob")
+summary(fit)
+#双因素方差分析
+fit<-aovp(len~supp*dose,data=ToothGrowth,perm="Prob")
+summary(fit)
+#aovp()应用到方差分析设计中时，默认用唯一平方和法，R中默认的参数化方差分析设计用的是序贯平方和，对于平衡设计，两种方法结果相同，但不平衡设计两种方法结果则不同。设定seqs=TRUE可以生成序贯平方和
+#其他可做置换检验的包：perm包可做coin包的部分功能，corrperm包提供了有重复测量的相关性的置换检验，logregperm包提供Logistic回归的置换检验，glmperm包涵盖了广义线性模型的置换检验
+#置换检验在做统计假设检验时不理会正态分布、t分布、F分布或卡方分布，处理非正态数据、存在离群点、样本很小或无法做参数检验等情况有优势，但如果初始样本代表性很差，统计方法无法提高推断效果
+#置换检验主要用于生成检验零假设的P值，有助于回答效应是否存在，但对于获取置信区间和估计测量精度是比较困难的，这时用自助法就能派上用场了
+
+#自助法：从初始样本重复随机替换抽样，生成一系列待检验统计量的经验分布，无需特定的理论分布假设，便可生成统计量的置信区间，并能检验统计假设
+#1从样本中随机选择n个观测，抽样后放回
+#2计算并记录样本均值
+#3重复1～2一千次
+#4将1000个样本均值从小到大排序
+#找出中间的95%即为置信区间
+#主要用于：不服从正态分布，分布未知，有离群点，样本量过小，没有可供选择的参数方法
+
+#boot包的自助法：1写一个能返回待研究统计量值的函数；2为生成R中自助法所需的有效统计量重复数，用boot()对上个函数进行处理；3用boot.ci()获取2中生成的统计量的置信区间。
+#bootobject<-boot(data=,statistic=,R=,...):data是向量、矩阵或数据框；statistic生成K个统计量以供自举的函数（k=1时对单个统计量进行自助抽样）函数需包括indices参数，以便boot()用它从每个重复中选择实例；R是自助抽样次数
+#boot()调用统计量函数R次，每次都从整数1:nrow(data)中生成一列有放回的随机指标，这些指标被统计量函数用来选择样本，统计量根据所选样本进行计算，结果存在bootobject中。bootobject结构：t0是从原始数据得到的K个统计量的观测值，t是一个R×K矩阵，每行即K个统计量的自助重复值
+#有了自助样本，通过print()和plot()来检查结果，如果还算合理，用boot.ci()获取置信区间：boot.ci(bootobject,conf=,type=),conf是置信度，type是置信区间类型可选norm\basic\stud\perc\bca\all(默认all),perc展示样本均值，bca根据偏差对区间做简单调整，通常bca更可取
+#单个统计量自助
+rsq<-function(formula,data,indices){
+  d<-data[indices,]
+  fit<-lm(formula,data=d)
+  return(summary(fit)$r.square)}
+library(boot)
+set.seed(1234)
+results<-boot(data=mtcars,statistic=rsq,R=1000,formula=mpg~wt+disp)
+print(results)
+plot(results)
+boot.ci(results,type=c("perc","bca"))
+#多个统计量的自助
+bs<-function(formula,data,indices){
+  d<-data[indices,]
+  fit<-lm(formula,data=d)
+  return(coef(fit))}  #返回回归系数向量的函数
+library(boot)
+set.seed(1234)
+results<-boot(data=mtcars,statistic=bs,R=1000,formula=mpg~wt+disp)   #自助抽样
+print(results)
+#对多个统计量自助，添加索引参数，指明plot()和boot.ci()所分析的bootobject$t的列，这里索引1指截距，2指wt，3指disp
+plot(results,index=2)
+boot.ci(results,type="bca",index=2)
+boot.ci(results,type="bca",index=3)
+#这里每次都对整个样本数据进行重抽样，但其实如果假定预测变量有固定水平，最好只对残差项重抽样
+
+
+#广义线性模型：扩展线性模型，包含了非正态因变量的分析，类别变量（Logistic)或计数（泊松）
+#glm():glm(formula,family=family(link=function),data=)family是概率分布，link=function是相应默认的连接函数
+#family           link=function(default)
+#binomial          link="logit"
+#gaussian          link="identity"
+#gamma             link="inverse"
+#inverse.gaussian  link="1/mu^2"
+#poisson           link="log"
+#quasi             link="identity",variance="constant"
+#quasibinomial     link="logit"
+#quasipoisson      link="log"
+#Logistic回归适用于二值响应变量，y服从二项分布
+glm(y~x2+x2+x3,family=binomial(link="logit"),data=mydata)
+#泊松回归适用于给定时间内响应变量为事件发生数目。y服从泊松分布
+glm(y~x1+x2+x3,family=poisson(link="log"),data=mydata)
+#glm(y~x1+x2+x3,family=gaussian(link="identity"),data=mydata)与lm(y~x1+x2+x3,data=mydata)等价
+#广义线性模型通过拟合响应变量的条件均值的一个函数而不是响应变量的条件均值，假设响应变量服从指数分布族中的某个分布，模型参数估计的推导依据是极大似然估计，而不最小二乘
+#常与glm()连用的函数：summary(),coefficients()\coef(),confint(),residuals(),anova(),plot(),predict();和lm()连用的差不多
+
+#模型拟合与回归诊断：与OLS线性模型一样，模型适用性评价也重要，但标准不统一，通常可以用和OLS一样的方法，但有几点建议：
+#评价模型适用性时，可以绘制初始响应变量的预测值与残差的图形:plot(predict(model,type="response"),residuals(model,type="deviance")),model是glm()返回的对象；R将列出帽子值、学生化残差值和cook距离统计量的近似值：plot(hatvalues(model)),plot(rstudent(model)),plot(cooks.distance(model)),通过相互比较找出异常大的值
+#influencePlot(model)可以创建一个综合性的诊断图，横轴是杠杆值，纵轴是学生化残差值，符号大小与cook距离成正比
+
+#Logistic回归：load AER package's Affairs dataframe
+data(Affairs,package="AER")
+summary(Affairs)
+table(Affairs$affairs)
+Affairs$ynaffair[Affairs$affairs>0]<-1
+Affairs$ynaffair[Affairs$affairs==0]<-0
+Affairs$ynaffair<-factor(Affairs$ynaffair,levels=c(0,1),labels=c("no","yes"))
+table(Affairs$ynaffair)
+fit.full<-glm(ynaffair~gender+age+yearsmarried+children+religiousness+education+occupation+rating,data=Affairs,family=binomial())   #全模型
+summary(fit.full)
+fit.reduce<-glm(ynaffair~age+yearsmarried+religiousness+rating,data=Affairs,family=binomial())   #去除不显著变量后的模型
+summary(fit.reduce)
+anova(fit.reduce,fit.full,test="Chisq")  #两个模型是嵌套的，所以可以用anova()
+
+#解释模型参数 
+coef(fit.reduce)
+#Logistic回归中，响应变量是y=1的对数优势比(log)，回归系数含义是当项分预测变量不变时，一单位预测变量的变化可引起的响应变量对数优势比的变化
+exp(coef(fit.reduce))  #结果指数化
+#评价预测变量对结果概率的影响：predict()
+testdata<-data.frame(rating=c(1,2,3,4,5),age=mean(Affairs$age),yearsmarried=mean(Affairs$yearsmarried),religiousness=mean(Affairs$religiousness))
+testdata
+testdata$prob<-predict(fit.reduce,newdata=testdata,type="response")
+testdata<-data.frame(rating=mean(Affairs$rating),age=seq(17,57,10),yearsmarried=mean(Affairs$yearsmarried),religiousness=mean(Affairs$religiousness))
+testdata
+testdata$prob<-predict(fit.reduce,newdata=testdata,type="response")
+#过度离势：观测到的响应变量的方差大于期望的二项分布的方差，会导致奇异的标准误检验和不精确的显著性检验。出现过度离势时，仍可用glm()拟合Logistic回归，但需要将二项分布改为类二项分布
+#检验过度离势的一种方法是比较二项分布模型的残差偏差与残差自由度，如果比值比1大很多，便可认为存在。检验方式：拟合模型两次，第一次用family="binomial",第二次用family="quasibinomial",第一次返回对象记为fit,第二次记为fit.od,则：pchisq(summary(fit.od)$dispersion*fit$df.residual,fit$df.residual,lower=F)
+fit<-glm(ynaffair~age+yearsmarried+religiousness+rating,family = binomial(),data=Affairs)
+fit.od<-glm(ynaffair~age+yearsmarried+religiousness+rating,family = quasibinomial(),data=Affairs)
+pchisq(summary(fit.od)$dispersion*fit$df.residual,fit$df.residual,lower=F)
+#扩展的Logistic回归和变种
+#稳健Logistic回归：robust包的glmRob()可用来拟合稳健的广义线性模型，当拟合Logistic回归模型数据出现离群点和强影响点时，可用稳健Logistic回归
+#多项分布回归：响应变量包含两个以上的无序类别，可用mlogit包的mlogit()拟合多项Logistic回归
+#序数Logistic回归：响应变量是一组有序的类别，可用rms包的lrm()拟合序数Logistic回归
+
+#泊松回归：因变量是计数变量：robust包
+library(robust)
+data("breslow.dat",package = "robust")
+names(breslow.dat)
+summary(breslow.dat[c(6,7,8,10)])
+opar<-par(no.readonly = TRUE)
+par(mfrow=c(1,2))
+attach(breslow.dat)
+hist(sumY,breaks = 20)
+boxplot(sumY~Trt)
+par(opar)
+#泊松回归不关注方差异质性
+fit<-glm(sumY~Base+Age+Trt,data=breslow.dat,family = poisson())
+summary(fit)
+#解释模型参数：coef()或者summary()结果的Coefficients表格
+coef(fit)  #泊松回归中因变量以条件均值的对数形式ln(lambda)建模
+exp(coef(fit))  #指数化的回归系数
+#与Logistic回归的指数化参数相似，泊松模型的指数化参数对响应变量的影响都是成倍增加，而不是线性增加
+#过度离势：处理计数型数据时经常发生过度离势，且会对结果的可解释性造成负面影响
+#可能发生过离势的原因：遗漏了重要的预测变量；因为事件相关，泊松分布假设每次事件是独立的，但实际通常不是这样；纵向数据分析中重复测量数据由于内在群聚特性可导致过度离势
+#负面影响：可能会得到很小的标准误和置信区间，并且显著性检验也过于宽松
+#过度离势检验方法与Logistic类似：残差偏差与残差自由度比远远大于1，qcc包有一个检验方法
+library(qcc)
+qcc.overdispersion.test(breslow.dat$sumY,type = "poisson")
+#通过用family="quasipoisson"替换family="poisson",仍可用glm()对该数据进行拟合，然后比较再次拟合的比值
+fit.od<-glm(sumY~Base+Age+Trt,data=breslow.dat,family = quasipoisson())
+summary(fit.od)
+#扩展：
+#时间段变化的泊松分布：之前的拟合是固定时间的，比如一个星期内就都是一个星期，但是有的数据，各观测时间长度是不一样的，可以用glm()的offset选项，这里假设事件发生的比率是相同的
+#fit<-glm(sumY~Base+Age+Trt,data=breslow.dat,offset = log(time),family=poisson())
+#零膨胀的泊松回归:存在观测计数为零，这时可以用零膨胀的泊松回归，它将同时拟合两个模型：一个用来预测哪些又会发生，另一个用来预测排除了零观测对象后的调查对象会发生多少次，可以看做是Logsitic和泊松回归的组合，pscl包的zeroinfl()可做
+#稳健泊松回归：robust包的glmRob()
+
+
+#主成分和因子分析：因子分析常用5~10倍于变量数的样本数
+#基础的：princomp()和factanal()
+#psych包的：
+#principal()方差旋转方法的主成分分析
+#fa()主轴、最小残差、加权最小平方或最大似然估计的因子分析
+#fa.parallel()含平行分析的碎石图
+#factor.plot()绘制因子分析或主成分分析的结果
+#fa.diagram()绘制因子分析或主成分的载荷矩阵
+#scree()因子分析和主成分分析的碎石图
+#一般步骤：数据预处理：输入原始数据或相关系数矩阵到principal()和fa(),不能有缺失值；选择因子模型：判断是PCA(降维)还是EFA(潜在结构)，如果是EFA则需要选择一种估计因子模型的方法，如最大似然估计；判断要选择的主成分/因子数目；选择主成分/因子；解释结果；计算主成分或因子得分
+
+#主成分分析PCA： 
+#判断主成分个数：经验和理论；要解释变量方差的积累值的阈值；检查变量间k*k的相关系数矩阵。最常见的是特征值方法：建议保留大于1的主成分；碎石图方法：图形斜率变化最大之上的；模拟方法：平行分析
+library(psych)
+fa.parallel(USJudgeRatings[,-1],fa="pc",n.iter = 100,show.legend = TRUE)  #fa=有pc\fc\both，分别是主成分，因子，两者都做
+#提取主成分：principal():principal(r,nfactors=,rotate=,scores=):r是相关系数矩阵或原始数据矩阵（会自动计算相关系数矩阵），nfactors是主成分数，默认1，rotate指定旋转方法，默认varimax,scores是否计算得分，默认不计算
+library(psych)
+pc<-principal(USJudgeRatings[,-1],nfactors = 1)   #pc是成分载荷，h2是成分公因子方差-对变量的方差解释度，u2是成分唯一性-方差不能被解释的比例（1-h2),ss loadings是与主成分相关联在特征值，Proportion Var是主成分对数据的解释度
+fa.parallel(Harman23.cor$cov,n.obs = 302,fa="pc",n.iter = 100)
+pc<-principal(Harman23.cor$cov,nfactors = 2,rotate = "none")
+#主成分旋转：将成分载荷变得更容易解释，有正交旋转（成分不相关）和斜交旋转（成分相关），常用的正交旋转是方差极大旋转
+rc<-principal(Harman23.cor$cov,nfactors = 2,rotate = "varimax")
+#获取主成分得分
+pc<-principal(USJudgeRatings,nfactors = 1,scores = TRUE)  #得分存在返回对象的scores中
+pc$scores
+#主成分分析基于相关系数矩阵时，原始数据就不可用了，也不可能获取每个观测的主成分得分，但可以得到用来计算主成分得分的系数
+round(unclass(rc$weights),2)
+
+#探索性因子分析EFA
+covariances<-ability.cov$cov
+correlations<-cov2cor(covariances)
+correlations
+#判断公因子数：fa.parallel()
+library(psych)
+fa.parallel(correlations,n.obs = 112,fa="both",n.iter = 100)  #PCA是特征值大于1，EFA是大于0。当几个判断标准结果不同时，可以优先考虑多的
+#提取公因子：fa():fa(r,nfactors=,n.obs=,rotate=,scores=,fm=),rotate默认互变异数最小法，fm设定因子化方法，默认极小残差法，其他如最大似然法(ml)、主轴迭代法(pa)、加权最小二乘法(wls)、广义加权最小二乘法(gls)和最小残差法(minres),常用最大似然法，统计性质好，但有进不会收敛，此时用主轴迭代法效果要好
+fa<-fa(correlations,nfactors = 2,rotate = "none",fm="pa")
+#因子旋转:正交旋转
+fa.varimax<-fa(correlations,nfactors = 2,rotate = "varimax",fm="pa")
+#斜交旋转
+fa.promax<-fa(correlations,nfactors = 2,rotate = "promax",fm="pa")
+#正交旋转重点在因子结构矩阵（变量与因子的相关系数），斜交旋转会考虑三个矩阵：结构矩阵（因子载荷矩阵）、模式矩阵（标准化的回归系数矩阵，权重）、关联矩阵（相关系数矩阵）；如果关联性很低，则可能需要用正交旋转；
+#结构矩阵没有列出，用F=P*Phi算，F是因子载荷阵，P是因子模式阵，Phi是因子关联阵
+fsm<-function(oblique){
+  if(class(oblique)[2]=="fa" & is.null(oblique$Phi)){
+    warning("object does't look like oblique EFA")
+    
+  }else{
+    P<-unclass(oblique$loading)
+    F<-P %*% oblique$Phi
+    colnames(F)<-c("pa1","pa2")
+    return(F)
+  }
+}
+fsm(fa.promax)
+#斜交模型更符合真实数据，但复杂一点，结果也没那么漂亮
+#factor.plot()或fa.diagram()可以绘制正交或斜交结果图
+factor.plot(fa.promax,labels = rownames(fa.promax$loadings))
+fa.diagram(fa.promax,simple = FALSE)   #simple=TRUE显示每个因子下最大载荷及因子间相关系数
+#真实数据的变量要远大于这些，通常是几十上百
+library(psych)
+fa.24tests<-fa(Harman74.cor$cov,nfactors=4,rotate="promax")
+fa.diagram(fa.24tests,simple = FALSE)
+factor.plot(fa.24tests,labels = rownames(fa.promax$loadings))
+#因子得分：EFA不太关注因子得分，fa()中添加score=TRUE即可，还能得到得分系数，在返回对象的weights元素中
+fa.promax$weights   #与可精确计算的主成分得分不同，因子得分只是估计得到，它的估计方法有多种，fa()用的是回归方法
+#其他EFA包：FactoMineR包不仅有PCA和EFA，还有潜变量模型。FAiR包用遗传算法来估计因子分析模型，增强了模型参数估计能力，能处理不等式的约束条件。GPArotation包有许多因子旋转方法。nFactors包有判断因子数目的许多方法
+#其他潜变量模型：CFA先验理论型，是SEM的一种，sem\openMx\lavaan包都可做。ltm包可用来拟合问卷中各项目的潜变量模型，常用来创建大规模标准化测试，如SAT和GRE
+#潜类别模型（潜在因子是类别型）：FlexMix\lcmm\randomLCA\poLC包进行拟合，lcda包可做潜类别分析，lsa包可做潜在语义分析
+#ca包可做简单和多重对应分析，用于二维列联表和多维列联表中探索类别型变量的结构
+#R中还有众多的多维标度法（MDS，可用来发现解释相似性和可测对象间距离的潜在维度)计算工具，cmdscale()可做经典MDS，MASS包的isoMDS()可做非线性MDS,vagan包则可做两种MDS
+
+
+#处理缺失数据:VIM和mice包
+#处理缺失值的步骤：识别；检查原因；删除或用合理值代替
+#缺失数据的分类：完全随机；随机；非随机。通常假定为前两种
+
+#识别：R用NA代表缺失值，NaN代表不可能的值，Inf和-Inf代表正负无穷；is.na()\is.nan()\is.infinite()来识别，这些函数返回对象与其自身参数个数相同
+#complete.cases()可用来识别矩阵或数据框中没有缺失值的行
+data(sleep,package="VIM")     #加载数据
+sleep[complete.cases(sleep),]   #列出没有缺失值的行
+sleep[!complete.cases(sleep),]
+sum(is.na(sleep$Dream))
+mean(is.na(sleep$Dream))
+mean(!complete.cases(sleep))
+#complete.cases()仅将NA和NaN识别为缺失值，无穷值被当做有效值，必须用这些函数来识别缺失值，==NA这样的逻辑式无法实现
+
+#缺失值模式
+#列表显示：mice包的md.pattern()可生成一个以矩阵或数据框形式展示缺失值模式的表格
+library(mice)
+data(sleep,package="VIM")
+md.pattern(sleep)
+#图形显示：VIM包的aggr()\matrixplot()\scattMiss()
+#aggr()绘制每个变量的缺失值数和每个变量组合的缺失值数
+library("VIM")
+aggr(sleep,prop=FALSE,numbers=TRUE)  #prop=TRUE则是比例模式而不是计数，numbers=FALSE删去数值型标签（默认）
+#matrixplot()生成展示每个实例数据的图形
+#marginplot()生成散点图
+marginplot(sleep[c("Gest","Dream")],pch=c(20),col=c("darkgray","red","blue"))
+#VIM包还有许多图形，可以好好探索
+#相关性探索缺失值
+x<-as.data.frame(abs(is.na(sleep)))
+head(sleep)
+head(x)
+y<-x[whick(sd(x)>0)]
+cor(y)
+cor(sleep,y,use="pairwise.complete.obs")
+
+#识别缺失数据的数目、分布和模式有两个目的：分析生成缺失数据的潜在机制；评价缺失数据对回答实质性问题的影响。
+#理性处理不完整数据：推理（根据已知数据和已知数据与缺失值的关系推理：算术关系、逻辑关系、相关关系）
+#行删除：complete.cases():newdata<-mydata[complete.cases(mydata),]或newdata<-na.omit(mydata)
+cor(na.omit(sleep))  #或cor(sleep,use="complete.obs")
+fit<-lm(Dream~Span+Gest,data=na.omit(sleep))
+summary(fit)
+#多重插补(MI)：面对复杂的缺失值问题常用，Amelia\mice\mi包可执行
+#mice包的执行模式：mice()生成多个（默认5）插补形成的完整数据集，with()依次对每个数据集应用统计模型，最后pool()将各单独的分析结果整合为一组结果
+#library(mice)
+#imp<-mice(mydata,m)      #mydata为原始含缺失值的数据，m为生成插补完整数据集个数，默认5,生成的imp是一个列表对象
+#fit<-with(imp,analysis)    #analysis是一个表达式，用来设定统计分析方法，包括：lm(),glm(),gam(),nbrm() ，生成fit是一个列表对象
+#pooled<-pool(fit)     #生成pooled是一个列表对象
+#summary(pooled)
+library(mice)
+data(sleep,package="VIM")
+imp<-mice(sleep,seed=1234)
+fit<-with(imp,lm(Dream~Span+Gest))
+pooled<-pool(fit)
+summary(pooled)    #fmi是由于引入缺失数据而引起的变异所占整体不确定性的比例
+imp$imp$Dream
+complete(imp,action = 1)   #imp共有5个完整数据集，action=1表示第1个
+
+#处理缺失值的其他方法（通常用于专业领域）
+#Hmisc       包含多种函数，支持简单插补、多重插补、典型变量插补
+#mvnmle      对多元正态分布数据中缺失值的最大似然估计
+#cat         对数线性模型中多元类别变量的多重插补
+#arrayImpute\arrayMissPattern\SeqKnn       处理微阵列缺失数据的实用函数
+#longitudinalData       相关的函数列表，比如对时间序列缺失值进行插补的一系列函数
+#kmi         处理生存分析缺失值的kaplan-meier多重插补
+#mix         一般位置模型中混合类别和连续数据的多重插补
+#pan         多元面板数据或聚类数据的多重插补
+#成对删除和简单插补是仍在使用但已经过时应该被舍弃的方法
+
+#高级图形系统：grid\lattice\ggplot2
+#交互式图形：iplots\playwith\latticist\rggobi
+#lattice包：栅栏图形
+library(lattice)
+histogram(~height|voice.part,data = singer)  #voice.part是conditioning variable,书上翻译条件变量，百度翻译调节变量,百度说"|"后的是工具变量
+#lattice包的各种高级绘图函数格式：graph_function(formula,data=,options),formula指定要展示的变量和条件变量，data是数据框，options是参数
+
+#graph_function常用函数：表达式示例
+#三维等高线图：contourplot():z~x*y
+#三维水平图：levelplot():z~y*x
+#三维散点图：cloud():z~x*y|A
+#三维线框图：wireframe():z~y*x
+#条形图：barchart():x~A或A~x
+#箱线图：bwplot():x~A或A~x
+#点图：dotplot():~x|A
+#直方图：histogram():~x
+#核密度图：desityplot():~x|A*B
+#平等坐标图：parallel():dataframe
+#散点图：xyplot():y~x|A
+#散点图矩阵：splom():dataframe
+#带状图：stripplot():A~x或x~A
+#以上小写字母表示数值型变量，大写字母表示类别型变量
+
+#options常用参数：
+#aspect     数值，设定每个面板中图形 的宽高比
+#col\pch\lty\lwd      向量，分别设定图形 中的颜色、符号、线条类型、线宽
+#Groups      用来分组的因子
+#index.cond       列表，设定面板的展示顺序
+#key\auto.key       函数，添加分组变量的图例符号
+#layout       两元素数值型向量，设定面板的摆放方式（行数和列数）；还可添加第三个元素，以指定页数     
+#Main\sub       字符型向量，设定主标题和副标题
+#panel        函数，设定每个面板要生成的图形
+#Scales       列表，添加坐标轴标注信息
+#Strip         函数，设定面板条带区域
+#Split\position          数值型向量，在一页上绘制多幅图形
+#Type          字符型向量，设定一个或多个散点图的绘图参数（如p=点，l=线，r=回归，smooth=平滑曲线，g=格点
+#xlab\ylab 
+#xlim\ylim      两元素数值型向量，分别设定横轴和纵轴的最小最大值
+#高级绘图函数，表达式形式通常是：y~x|A*B，"|"左边是主要变量，右边是条件变量，x|A即因子A各个水平下x的分布情况
+library(lattice)
+attach(mtcars)
+gear<-factor(gear,levels=c(3,4,5),labels=c("3gear","4gear","5gear"))
+cyl<-factor(cyl,levels=c(4,6,8),labels=c("4cylinder","6cylinder","8cylinder"))
+densityplot(~mpg)
+densityplot(~mpg|cyl)
+bwplot(cyl~mpg|gear)
+xyplot(mpg~wt|cyl*gear)
+cloud(mpg~wt*qsec|cyl)
+dotplot(cyl~mpg|gear)
+splom(mtcars[c(1,3,4,5,6)])
+detach(mtcars)
+#操作和存储lattice包生成的图形
+library(lattice)
+mygraph<-densityplot(~height|voice.part,data=singer)  #可以用options修改图形
+update(mygraph,col="red",pch=16,cex=.8,jitter=.05,lwd=2)      #添加参数修改图形，jitter=是扰动点
+
+#条件变量：通常条件变量是因子，如果想以连续型变量为条件，可以用cut()将连续型变量转换为离散变量
+#lattice包将连续型变量转换为瓦块shingle数据结构:myshingle<-equal.count(x,number=#,overlap=proportion),将连续型变量x分割到#区间中，重叠度为proportion,每个数值范围内的观测数相等，并返回一个变量myshingle
+#连续型变量转换为瓦块后，可作为一个条件变量
+displacement<-equal.count(mtcars$disp,number=3,overlap=0)
+xyplot(mpg~wt|displacement,data=mtcars,layout=c(3,1),aspect = 1.5)
+
+#面板函数：panel.graph_function
+xyplot(mpg~wt|displacement,data=mtcars)
+xyplot(mpg~wt|displacement,data=mtcars,panel=panel.xyplot)    #与上一个结果相同，panel=panel.xyplot就是默认的设定面板函数，可以用别的面板函数替换
+#自定义面板函数
+displacement<-equal.count(mtcars$disp,number=3,overlap=0)
+mypanel<-function(x,y){
+  panel.xyplot(x,y,pch=19)
+  panel.rug(x,y)
+  panel.grid(h=-1,v=-1)
+  panel.lmline(x,y,col="red",lwd=1,lty=2)
+}
+xyplot(mpg~wt|displacement,data=mtcars,layout=c(3,1),aspect = 1.5,panel = mypanel)
+#每个面板函数都有其独特的结构和选项，查看帮助面
+library(lattice)
+mtcars$transmission<-factor(mtcars$am,levels = c(0,1),labels = c("Automatic","Manual"))
+panel.smoother<-function(x,y){
+  panel.grid(h=-1,v=-1)
+  panel.xyplot(x,y)
+  panel.loess(x,y)
+  panel.abline(h=mean(y),lwd=2,lty=2,col="green")
+}
+xyplot(mpg~disp|transmission,data=mtcars,scales=list(cex=.8,col="red"),panel=panel.smoother,aspect=1)  #list中还可以嵌套list:scales=list(x=list(),y=list())
+#分组变量：当lattice图形表达式含有条件变量时，将会生成该变量各水平下的面板，若想将结果叠加到一起，可以将变量设定为分组变量
+library(lattice)
+mtcars$transmission<-factor(mtcars$am,levels=c(0,1),labels = c("Automatic","Manual"))
+densityplot(~mpg,data=mtcars,group=transmission,auto.key = TRUE)   
+#group=默认将分组变量各水平图形叠加，图例默认没有，auto.key=TRUE只是一个初步的图例，自定义图例格式为：auto.key=list(space="right",columns=1,title="sample title"),更多自定义可以用key=
+library(lattice)
+mtcars$transmission<-factor(mtcars$am,levels = c(0,1),labels = c("automatic","manual"))
+colors=c("red","blue")
+lines=c(1,2)
+points=c(16,17)
+key.trans<-list(title="transmission",space="bottom",columns=2,text=list(levels(mtcars$transmission)),points=list(pch=points,col=colors),lines=list(col=colors,lty=lines),cex.title=1,cex=.9)
+densityplot(~mpg,data=mtcars,group=transmission,pch=points,lty=lines,col=colors,jitter=.005,lwd=2,key=key.trans)  #jitter=增加高度抖动，默认为0
+#可以添加多个图例，不只一个
+#分组变量和条件变量同时出现示例：
+library(lattice)
+colors<-"darkgreen"
+symbols<-c(1:12)
+linetype<-c(1:3)
+key.species<-list(title="plant",space="right",text=list(levels(CO2$Plant)),points=list(pch=symbols,col=colors))
+xyplot(uptake~conc|Type*Treatment,data=CO2,group=Plant,type="o",pch=symbols,col=colors,lty=linetype,ylab = expression(paste("updake ",bgroup("(",italic(frac("umol","m"^2)),")"))),xlab = expression(paste("concentration ",bgroup("(",italic(frac(mL,L)),")"))),key=key.species)
+#\n换行，expression()添加数学符号
+#par()只对R简单图形系统有效，对lattice等高级图形系统无效，lattice中的函数默认的图形参数包含在一个在的列表对象中，可用trellis.par.get()获取，用trellis.par.set()修改，show.settings()可展示当前参数设置
+library(lattice)
+show.settings()
+mysettings<-trellis.par.get()
+mysettings$superpose.symbol
+mysettings$superpose.symbol$pch<-c(1:10)
+trellis.par.set(mysettings)
+show.settings()
+#页面摆放：由于par()对lattice无效，不能用其对图形位置设定，简单的可以先将lattice图形存储到对象中，然后用plot()的split=或position=来控制，split将页面分割为一个指定行数和列数的矩阵，然后将图形放到该矩阵
+#split=c(row,column,total rows,total columns)
+library(lattice)
+graph1<-histogram(~height|voice.part,data=singer)
+graph2<-densityplot(~height,data=singer,group=voice.part,plot.points=FALSE,auto.key=list(columns=4))
+plot(graph1,split=c(1,1,1,2))
+plot(graph2,split=c(1,2,1,2),newpage=FALSE)   #newpage=TRUE新启动一个页面（默认）
+#position=c(xmin,ymin,xmax,ymax)
+plot(graph1,position = c(0,.4,1,1))
+plot(graph2,position = c(0,0,1,.4),newpage = FALSE)
+#改变面板顺序，index.cond=
+#levels(singer$voice.part)
+#index.cond=list(c(2,4,6,8,1,3,5,7))
+library(lattice)
+colors<-"darkgreen"
+symbols<-c(1:12)
+linetype<-c(1:3)
+key.species<-list(title="plant",space="right",text=list(levels(CO2$Plant)),points=list(pch=symbols,col=colors))
+xyplot(uptake~conc|Type*Treatment,data=CO2,group=Plant,type="o",pch=symbols,col=colors,lty=linetype,ylab = expression(paste("updake ",bgroup("(",italic(frac("umol","m"^2)),")"))),xlab = expression(paste("concentration ",bgroup("(",italic(frac(mL,L)),")"))),key=key.species,index.cond=list(c(1,2),c(2,1)))
+
+#ggplot2包：qplot():qplot(x,y,data=,color=,shape=,size=,alpha=,geom=,method=,formula=,facets=,xlim=,ylim=,xlab=,ylab=,main=,sub=)
+#alpha   元素重叠的alpha透明度0～1(完全透明~不透明)
+#color\shape\size\fill    把变量的水平与符号颜色、开关或大小联系起来。对于直线图，color将把线条颜色与变量水平联系起来，对于密度图和箱线图，fill将把填充颜色与变量联系起来。图例会自动生成
+#data    指定数据框
+#facets    指定条件变量，创建一个栅栏图，表达式rowvar~colvar；创建一个基于单条件的栅栏图可用rowvar~. 或 .~colvar
+#geom     设定定义图形类型的几何形状，geom是一个单条目或多条目的字符型向量，包括"point","smooth","boxplot","line","histogram","density","bar","jitter"
+#method\formula   若geom="smooth",则默认添加一条平滑拟合曲线和置信区间。当观测数大于1000,便需要调用更高效的平滑拟合算法，如lm\gam\rlm。formula指定拟合的形式，要添加简单回归曲线，则设定geom="smooth",method="lm",formula=y~x。改为formula=y~poly(x,2)将生成二次拟合，表达式使用字母x和y，而不是变量名称。对于method="gam",要先加载mgcv包，method="rml"则需先加载MASS包
+library(ggplot2)
+mtcars$cylinder<-as.factor(mtcars$cyl)
+qplot(cylinder,mpg,data=mtcars,geom=c("boxplot","jitter"),fill=cylinder)
+transmission<-factor(mtcars$am,levels=c(0,1),labels=c("auto","manual"))
+qplot(wt,mpg,data=mtcars,color=transmission,shape=transmission,geom=c("point","smooth"),method="lm",formula=y~x) #这里要改成geom="smooth"才行，method=和formula=只在"smooth"才能用，这里geom有两个类型，会报错
+qplot(wt,mpg,data=mtcars,color=transmission,shape=transmission,geom="smooth",method="lm",formula=y~x)
+mtcars$cyl<-factor(mtcars$cyl,levels=c(4,6,8),labels=c("4cyl","6cyl","8cyl"))
+mtcars$am<-factor(mtcars$am,levels=c(0,1),labels=c("auto","manual"))
+qplot(wt,mpg,data=mtcars,facets=am~cyl,size=hp)
+data(singer,package="lattice")
+qplot(height,data=singer,geom=c("density"),facets=voice.part~.,fill=voice.part)
+
+#交互式图形：playwith,latticist,iplot,rggobi
+#鉴别点：对散点图中的点进行鉴别和标注：identify()
+plot(mtcars$wt,mtcars$mpg)
+identify(mtcars$wt,mtcars$mpg,labels=row.names(mtcars))    #对于lattice和ggplot2的图形，identify()无效
+#playwith包:有GUI。install.package("playwith",depend=TRUE):playwith()允许用户识别和标注点、查看一个观测所有的变量值、缩放和旋转图形、添加标注（文本、箭头、线条、矩形、标题、标签）、修改视觉元素（颜色、文本大小等）、应用先前存储的图形风格，以及多种格式输出图形结果
+library(playwith)
+library(lattice)
+playwith(xyplot(mpg~wt|factor(cyl)*factor(am),data=mtcars,subscripts=TRUE,type=c("r","p")))
+#playwith()对基础图形和lattice\ggplot2图形有效，theme菜单一些选项只与基础图形契合很好，一些则与ggplot2图形契合较好，还有些对ggplot2无效。
+#latticist包：栅栏图，有GUI。
+library(latticist)
+mtcars$cyl<-factor(mtcars$cyl)
+mtcars$gear<-factor(mtcars$gear)
+latticist(mtcars,use.playwith=TRUE)  #直接使用playwith
+#iplots包：ibar()交互式柱状图，ibox(),ihist(),imap()交互式地图，imosaic(),ipcp()交互式平行坐标图，iplot()
+library(iplots)
+attach(mtcars)
+cylinders<-factor(cyl)
+gears<-factor(gear)
+transmission<-factor(am)
+ihist(mpg)
+ibar(gears)
+iplot(mpg,wt)
+ibox(mtcars[c("mpg","wt","qsec","disp","hp")])
+ipcp(mtcars[c("mpg","wt","qsec","disp","hp")])
+imosaic(transmission,cylinders)
+detach
+#rggobi：连接GGobi和R，先要安装GGobi，然后安装rggobi包，然后就可以用ggobi()在R中运行GGobi
+library(rggobi)
+g<-ggobi(mtcars)
+
+#R Commander是一个不错的GUI
+
+#从R中导出数据
+#符号分隔文本文件
+write.table(x,outfile,sep=delimiter,quote=TRUE,na="NA")
+#Excel
+library(xlsx)
+write.xlsx(x,outfile,col.Names=TRUE,row.names=TRUE,sheetName="sheet1",append=FALSE)
+#其他统计软件文档
+library(foreign)
+write.foreign(dataframe,datafile,codefile,package=package)   #codefile是其他软件可运行的读取该导出数据的的语句文件，package是其他软件："SPSS"，"SAS"，"Stata"
+
+#R中的矩阵运算
+# +-*/^       逐个元素的运算
+# A %*% B      矩阵乘
+# A %O% B     外积，AB'
+# cbind(A,B,...)    横向合并矩阵或向量
+# chol(A)        A的CHOLESKI分解，基R<-chol(A),chol(A)包含上三角因子，即R'R=A
+# colMeans(A)     列均值
+# crossprod(A)     A'A
+# crossprod(A,B)    A'B
+# colSums(A)          列和
+# diag(A)      主对角元素向量
+# diag(x)       主对角元素为x的对角矩阵
+# diag(k)       如果k是标量，创建k*k的单位矩阵
+# eigen(A)         A的特征值和特征向量，y<-eigen(A),y$val是特征值，y$vec是特征向量
+# ginv(A)      MASS包中，A的MOORE-PENROSE广义逆
+# qr(A)    A的QR分解，y$qr的上三角是分解结果，下三角是分解信息，y$rank是A的秩，y$qraux是附加信息向量，y$pivot是主元素选择策略
+# rbind(A,B,...)    纵向合并
+# rowMeans(A)      行均值
+# rowSums(A)     行和
+# solve(A)     A的逆，A是方阵
+# solve(A,b)     b=Ax的解微量x
+# Svd(A)       A奇异值分解，y$d是A的奇异值向量，y$u是矩阵，每一列都是A的左奇异向量，y$v是右奇异向量矩阵
+# t(A)     A转置
+
+#matlab包，模拟matlab句法
+#Matrix包，高密度矩阵或稀疏矩阵
+#matrixStats包，操作矩阵的行和列
+
+#大数据：高效程序
+#向量化计算，少用循环
+#用矩阵而不是数据框
+#read.table()读取数据时，明确指定colClasses和nrows,设置comment.char="",用NULL标明不需要的列，用scan()读入矩阵
+#删除临时对象和不再需要的对象，rm(list=ls())从内在中删除所有对象，rm(object)删除某对象
+#测试程序每个函数时间，Rprof(),summaryRprof(),system.time(),Rcpp包可将R对象转换成C++函数
+#分析大数据的包：
+#biglm,speedglm:大数据线性模型拟合，广义线性模型拟合
+#
+mydata<-read.csv("total.csv",TRUE)
+mydata<-subset(mydata,rt>0)
+m1<-lmer(rt~condition+(condition|subject),mydata)
+summary(m1)
+mydata<- aggregate(mydata, by=list(Subject = mydata$subject,Condition = mydata$conditio), FUN=mean, na.rm=TRUE)
+write.csv(mydata,"1.csv")
+mydata<-read.csv("1.csv",TRUE)
+t.test(rt~condition,data=mydata,paired = TRUE)
+
+
+#读无规律文本文件
+data1 <- readLines("01.asc")
+datat<-c(1:6)
+for(i in 1:length(data1)){
+  datay<-t(unlist(strsplit(data1[i],split = "\t")))
+  
+  if(length(datay)<6)
+    {datay<-c(datay,rep(0,times=6-length(datay)))}else
+  {datay<-datay[,1:6]}
+  datat<-rbind(datat,datay)
+}
+
+
+
+releas<-function(x){
+  datay<-t(unlist(strsplit(x,split = "\t")))
+  
+  if(length(datay)<6)
+  {datay<-c(datay,rep(0,times=6-length(datay)))}else
+  {datay<-datay[,1:6]}
+}
+datat<-sapply(data1[1:length(data1)],releas)
+datat<-t(datat)
+datat[100,2]
+datatt<-data.frame()
+#datatt<-subset(datatt,!is.na(as.numeric(datat[,1])))
+datatt<-subset(datat,datat[,1]!="MSG")
+datatt<-subset(datatt,datatt[,1]!="PRESCALER")
+datatt<-subset(datatt,datatt[,1]!="VPRESCALER")
+datatt<-subset(datatt,datatt[,1]!="EVENTS")
+datatt<-subset(datatt,datatt[,1]!="PUPIL")
+datatt<-subset(datatt,datatt[,1]!="SAMPLES")
+#datatt<-datatt[22:(length(datatt[,1])-21),]
+datatt[1,1]
+as.numeric(as.character(datatt$V7[1]))
+datatt<-as.data.frame(datatt,row.names = NULL)
+write.csv(datatt,"datattt.csv",row.names = FALSE)
+datatt<-read.csv("datattt.csv")
+releasap<-function(x){
+  if(!is.na(as.numeric(as.character(x)))){
+    x<-as.numeric(x)-1
+  }else if(as.character(x)=="START"){
+        x<-as.character(x)}else
+          x<-substr(as.character(x),1,4)
+}
+datatt$V7<-sapply(datatt$V1,releasap)
+k<-1
+for(i in 1:length(datatt$V1)){
+  if(is.na(as.numeric(datatt$V7[i]))){
+    if(datatt$V7[i]=="START"){
+    datatt$V8[i]<-paste(datatt$V7[i],k,sep = " ")
+    k<-k+1
+    j<-1
+    }else if(datatt$V7[i]=="SFIX")
+      {datatt$V8[i]<-paste(datatt$V7[i],j,sep = " ")
+      j<-j+1
+    }else{
+      datatt$V8[i]<-datatt$V7[i]
+      }
+  }else if(datatt$V7[i-2]=="START"){
+    datatt$V8[i]<-0
+    y<-as.numeric(datatt$V7[i]) 
+  }else
+    datatt$V8[i]<-as.numeric(datatt$V7[i])-y
+}
+datatt$V9<-NULL
+
+for(i in 1:length(datatt$V1)){
+  if(as.numeric(as.character(datatt$V2[i]))>100 & as.numeric(as.character(datatt$V2[i]))<300 & as.numeric(as.character(datatt$V3[i]))>300 & as.numeric(as.character(datatt$V3[i]))<600){
+    if(as.numeric(as.character(datatt$V4[i]))>100){
+      datatt$V9[i]<-1
+    }else if(datatt$V7[i]=="SFIX")
+    {datatt$V8[i]<-paste(datatt$V7[i],j,sep = " ")
+    j<-j+1
+    }else{
+      datatt$V9[i]<-datatt$V7[i]
+    }
+  }else if(datatt$V7[i-2]=="START"){
+    datatt$V8[i]<-0
+    y<-as.numeric(datatt$V7[i]) 
+  }else
+    datatt$V8[i]<-as.numeric(datatt$V7[i])-y
+}
+i<-3
+
+datatt$V7<-sapply(datatt$V1,releasap)
+datatt$V8<-sapply(datatt$V2,releasap)
+
+
+'
+k<-1;j<-3
+if(k==1 & j==2){
+  s<-2}else if(k==1 & j==1){
+    s<-3}else
+  s<-1
+'
+
+data1[1:34]
+as.numeric(data1[34])
+datay<-as.numeric(datay)
+#data3<-t(unlist(strsplit(data1[2],split = " ")))
+data2<-unlist(strsplit(data1[26],split = "\t"))
+data3<-unlist(strsplit(data1[2],split = " "))
+data4<-rbind(c(data3,c(1:(17-length(data3)))),data2)
+data4[2,2]
+data <- data[(length(data)-1):(length(data))]
+data <- gsub("[[:space:]]+", " ", data)
+data <- paste(data, collapse="\n")
+data <- read.table(textConnection(data), header=F)
+data[, -1]
+
+
+datat<-read.csv("datat.csv",header = TRUE)
+datat[,4]<-as.integer(datat[,4]/2+0.5)
+datat<-datat[,c(1,2,3,4,5,6,7,8,9)]
+dataY <- aggregate(datat, by=list(subject = datat$Subject,item = datat$Item,condition = datat$Condition,fixseq = datat$Fixseq), FUN=sum, na.rm=TRUE)
+datay<-dataY[,c(1,2,3,4,9,10,11,12,13)]
+dataYNtmp<-datay[,c(5:8)];
+dataYNtmp<-log((dataYNtmp+0.5)/(200-dataYNtmp+0.5));
+datay$datalgd<-dataYNtmp[,2]-dataYNtmp[,4];
+write.csv(datay,"datay.csv",row.names = FALSE)
+#把3个实验统一到一起
+datat<-read.csv("1datat.csv",TRUE,row.names = NULL)
+for(i in 2:3){
+  datatmp<-read.csv(paste(i,"datat",".csv",sep=""),TRUE,row.names = NULL)
+  datat<-rbind(datat,datatmp)
+}
+write.csv(datat,"datat.csv",row.names = FALSE)
+
+
+#数据分析
+library(lmerTest)
+data = read.delim("datat.csv", ",", header=TRUE)
+exp<-data
+ls()
+exp$p <- ifelse(exp$prime=="po",-.5,.5)
+exp$l <- ifelse(exp$life=="dif",-.5,.5)
+head(exp)
+exp1314<-subset(exp,Fixseq==18 & (expid==0 | expid==1) & l==0.5)
+head(exp1314)
+e1 <- lmer(datalgd ~ p*l + (1| Subject) + (1 | Item), data=exp1314)
+summary(e1)
+e2 <- lmer(datalgd ~ p*l + (p*l| Subject) + (p*l | Item), data=exp1314)
+summary(e2)
+e21 <- lmer(datatmp ~ p*l + (l| subject) + (0+l | trialID)+ (1 | trialID), data=exp1314)
+summary(e21)
+e3 <- lmer(datalgd ~ p*l + (p+l| Subject) +( p+l | Item), data=exp1314)
+summary(e3)
+e3 <- lmer(datalgd ~ p*l + (l| Subject) + (l | Item), data=exp1314)
+summary(e3)
+e3 <- lmer(datalgd ~ p*l + (p | Subject) + (p | Item), data=exp1314)
+summary(e3)
+e4 <- lmer(datatmp ~ p*l + (p| Subject) + (p | trialID)+ (0+l| subject) + (0+l | trialID), data=exp1314)
+summary(e4)
+e3 <- lmer(datalgd ~ expid*p + (expid*p| Subject) + (expid*p | Item), data=exp1314)
+summary(e3)
+e3 <- lmer(datalgd ~ expid*p + (expid+p| Subject) + (expid+p | Item), data=exp1314)
+summary(e3)
+e3 <- lmer(datalgd ~ expid*p + (expid| Subject) + (expid | Item), data=exp1314)
+summary(e3)
